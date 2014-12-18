@@ -1,0 +1,96 @@
+\documentclass[10pt,a4paper]{article}             % Definiton des Dokuments, Schriftgrösse, Stil
+%-----------------------------------------------------------------------------------------------------------------	
+\usepackage{uebungsblatt}						  % Einbinden des Übungsblattes, MUSS im gleichen Ordner liegen
+%-----------------------------------------------------------------------------------------------------------------	
+\usepackage[ngerman]{babel}						  % Deutsche Silbentrennung, Umlaute etc.
+\usepackage[utf8]{inputenc}
+%-----------------------------------------------------------------------------------------------------------------	
+% TikZ Library zum "Zeichnen", bei Bedarf einkommenentieren ! Tex braucht damit glaub länger zum Setzen...
+        %\usetikzlibrary{arrows,automata}
+        %\usepackage{pgf}
+        %\usepackage{tikz}
+%-----------------------------------------------------------------------------------------------------------------
+\usepackage{stmaryrd} 							  % Blitz Symbol, Widerspruch
+\usepackage{amsthm}   							  % Mathepaket
+\usepackage{amssymb}  							  % Mathepaket
+\usepackage{dsfont}								  % Auch irgendwas für Mathe...
+\usepackage[ruled,vlined]{algorithm2e}
+%-----------------------------------------------------------------------------------------------------------------
+\usepackage{graphics}						   	  % Einbinden von Grafiken
+\usepackage{graphicx}
+\usepackage{float}
+%-----------------------------------------------------------------------------------------------------------------
+\usepackage{fancyvrb}							  % Verbatim Umgebuung Definition
+\DefineVerbatimEnvironment{code}{Verbatim}{fontsize=\small}
+\DefineVerbatimEnvironment{example}{Verbatim}{fontsize=\small}
+\newcommand{\ignore}[1]{}
+
+\newcommand{\efen}           {f(n)}
+\newcommand{\geen}           {g(n)}
+\newcommand{\of}             {o{(\efen)}}
+\newcommand{\Of}             {\mathcal{O}(\efen)}
+\newcommand{\omf}            {\omega (\efen)}
+\newcommand{\Omf}            {\Omega (\efen)}
+\newcommand{\Thf}            {\Theta (\efen)}
+\newcommand{\union}          {\cup}
+\newcommand{\intersection}   {\cap}
+\newcommand{\equivalent}     {\Leftrightarrow}
+\newcommand{\logicalAnd}     {\wedge}
+
+
+\newcommand{\AsyPrayer}         { $$ \text {Let } c,c_1,c_2 \in \mathbb{R}. \text { Let } n,n_0 > 0 \logicalAnd n > n_0 $}
+\newcommand{\BigO}           { |\geen| \le c \cdot |\efen| }
+\newcommand{\LittleO}        { |\geen|  < c \cdot |\efen| }
+\newcommand{\BigOm}          { c \cdot |\geen| \ge |\efen| }
+\newcommand{\LittleOm}       { c \cdot |\geen| > |\efen| }
+\newcommand{\BigTh}          { c_1 \le \frac{|\geen|}{|\efen|} \le c_2 }
+%-----------------------------------------------------------------------------------------------------------------	
+\usepackage{fancyhdr}				              % Package für Kopf und Fusszeile			
+\pagestyle{fancy}
+%-----------------------------------------------------------------------------------------------------------------	
+\renewcommand{\headrulewidth}{0.5pt}			  % Linie der Kopfzeile 
+\renewcommand{\footrulewidth}{0.5pt}			  % Linie der Fusszeile
+%-----------------------------------------------------------------------------------------------------------------	
+\fancyfoot[C]{\thepage}							  % Definitionen der Kopf und Fußzeile
+\fancyhead[C]{\thepage}
+\fancyhead[L]{Bassel Khatib}
+%-----------------------------------------------------------------------------------------------------------------	
+\fancypagestyle{ErsteSeite}{                      % Definition für die erste Seite 
+    \fancyhf{}
+    \fancyfoot[C]{\thepage}}
+%-----------------------------------------------------------------------------------------------------------------	
+
+%-----------------------------------------------------------------------------------------------------------------	
+                                                    %Func Defs
+    \providecommand{\OO}[1]{\mathop{\mathrm{O}}\bigl(#1\bigr)}
+    \begin{document}								  % Beginn des Dokuments
+%-----------------------------------------------------------------------------------------------------------------
+    \thispagestyle{ErsteSeite}						  % Aufruf der Definition für die erste Seite
+%-----------------------------------------------------------------------------------------------------------------
+%-----------------------------------------------------------------------------------------------------------------
+    \uebkopfzeile
+    {Mathemathische Grundlagen der Informatik}               % Titel der Veranstaltung
+    {Wintersemster 2013, Gruppe B}				  % Semesterangabe, Übungsgruppe
+    {Dr. Sven Kosub, Steffen Sievering}                      			  % Dozenten, Übungsleiter
+    {Bassel Khatib}					  % Loesungsblattbearbeiter               
+%-----------------------------------------------------------------------------------------------------------------		                  	                                    
+    \uebtitel
+    {Lösungen zum 1.\ Übungsblatt}  			      % Titel (gross und zentriert)
+    {Freitag, 1.11.2013, 9 Uhr }    		      % Datum der Abgabe
+
+    \vspace{8mm}								 	  % Abstand Titel / Erster Abschnitt
+
+% Hier beginnt das richtige Dokument 
+%==================================================================================================================
+
+    \solution{1}{Vertiefung}{10}
+    \begin{enumerate}
+    \end{enumerate}
+    \solution{2}{Kreativitaet}{10}
+    \solution{3}{Transfer}{10}
+
+%==================================================================================================================|
+% Und hier endet das Dokument wieder... Gute Arbeit :-) 
+    \end{document}
+
+

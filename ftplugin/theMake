@@ -1,0 +1,9 @@
+default: paper.pdf
+        evince paper.pdf &
+%.pdf: %.tex
+        pdflatex $<
+refs:
+        latex paper
+        bibtex paper
+        latex paper
+        latex paper

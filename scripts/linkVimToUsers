@@ -1,0 +1,5 @@
+#ln -s origin dest
+ln -s ~/.vim/rcs/vimrc/ ~/.vimrc
+#pimp root with vimrc
+ln -s ~/.vim /root/.vim
+ln -s ~/.vim/rcs/vimrc /root/.vimrc

@@ -1,0 +1,18 @@
+startup_message off 
+
+select 0 
+split -v 
+
+focus top 
+resize 85 
+# screen -t tintin t++ default.tin 
+
+focus bottom 
+# screen -t map tail -f map.log 
+
+# split -h 
+# 
+# focus bottom 
+# screen -t note tail -f note.log 
+
+focus top 
