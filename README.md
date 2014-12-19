@@ -11,6 +11,11 @@ How to install:
 4. run vim, type :PluginInstall and let Vundle do its magic
 5. YouCompleteMe will complain. but that's OK, see READMES/YCM_README.
 
+libraries you'll need:
+
+* - Tagbar needs exuberant-ctags
+* - YouCompleteMe needs libclang and libboost
+
 Enjoy!
 
 This repo is work in progress.
