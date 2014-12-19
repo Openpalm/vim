@@ -267,16 +267,7 @@ inoremap _{ {<CR>}<Esc>:call BC_AddChar("}")<CR><Esc>kA<CR>
 inoremap _[ []<Esc>:call BC_AddChar("]")<CR>i
 inoremap _" ""<Esc>:call BC_AddChar("\"")<CR>i
 inoremap _' ''<Esc>:call BC_AddChar("\'")<CR>i
-inoremap _# ### ###<Esc>:call BC_AddChar("###")<CR>i
-" eay title brackets while writing in a text file
-inoremap _C /* */<Esc>:call BC_AddChar("")<CR>i
-"C Style Comments"
-inoremap _J /** **/<Esc>:call BC_AddChar("")<CR>i
-"Java Style Comments"
-inoremap _P """ """<Esc>:call BC_AddChar('')<CR>i
-"Python Style Comments"
-inoremap _H <-- --><Esc>:call BC_AddChar("")<CR>i
-"HTML Style Comments"
+
 
 " jump out of parenthesis, used with the above functions
 inoremap <C-j> <Esc>:call search(BC_GetChar(), "W")<CR>a
