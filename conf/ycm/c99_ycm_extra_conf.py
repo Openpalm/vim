@@ -58,7 +58,7 @@ flags = [
 # relevant for c++ headers.
 # For a C project, you would set this to 'c' instead of 'c++'.
 '-x',
-'c++',
+'c99',
 '-isystem',
 '../BoostParts',
 '-isystem',
@@ -74,21 +74,13 @@ flags = [
 '-I',
 './ClangCompleter',
 '-isystem',
-'./tests/gmock/gtest',
-'-isystem',
-'./tests/gmock/gtest/include',
-'-isystem',
-'./tests/gmock',
-'-isystem',
-'./tests/gmock/include',
-'-isystem',
 '/usr/include',
 '-isystem',
 '/usr/local/include',
 '-isystem',
-'/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1',
+'/usr/local/include',
 '-isystem',
-'/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include',
+'/usr/lib/llvm-3.5/include',
 ]
 
 

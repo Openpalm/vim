@@ -35,7 +35,7 @@ Plugin 'majutsushi/tagbar'
 "Nerdtree
 Plugin 'scrooloose/nerdtree'
 "YCM completions c/c++/python
-" After installing: cd ~/.vim/bundle/YouCompleteMe && ./install.sh --clang-completer
+" After installing: run ~/.vim/scripts/ycm_fix.sh
 Plugin 'Valloric/YouCompleteMe'
 
 " All of your Plugins must be added before the following line
@@ -55,10 +55,10 @@ set showmatch
 "#######################
 set smartindent
 set autoindent
-set tabstop=4
+set tabstop=2
 "set softtabstop=4
 "set conceallevel=1
-"set shiftwidth=4
+set shiftwidth=2
 %retab
 set wrapscan
 
@@ -327,7 +327,9 @@ nnoremap _ ddkkp
 "use qq to record, space to use the macro
 nnoremap <SPACE> @q
 "mapping gcc to gcc % -lm
-nnoremap <F4> :!gcc -std=c99 -Wall -Wextra -Wmissing-braces -Wstrict-prototypes -Wformat -Wpedantic % -lm
+nnoremap <F4> :!make
+" be careful when using vim's console to check output. the console is
+" incomplete.
 nnoremap <F3> :! ./a.out <bar> less
 "making it quicker to source vimrc
 nnoremap <F2> :source ~/.vimrc
@@ -335,19 +337,17 @@ nnoremap <F2> :source ~/.vimrc
 
 
 "### YCM defs  ###
-let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
+let g:ycm_global_ycm_extra_conf = "~/.vim/conf/ycm/ycm_extra_conf.py"
 
 "### Completion, hope it works ###
-let g:ycm_key_list_select_completion=[]
-let g:ycm_key_list_previous_completion=[]
+"let g:ycm_key_list_select_completion=[]
+"let g:ycm_key_list_previous_completion=[]
 
 
-
-" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+" Trigger configuration. Do not use <tab> if using ycm.
 let g:UltiSnipsExpandTrigger="<c-q>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-
 let g:UltiSnips = {}
 "let g:UltiSnips.always_use_first_snippet = 1
 let g:UltiSnips.snipmate_ft_filter = {
@@ -355,3 +355,8 @@ let g:UltiSnips.snipmate_ft_filter = {
      \ 'html'    : {'filetypes': ["html", "javascript", "_"] },
      \ 'cpp'    : {'filetypes': [] },
      \ }
+
+"#######################
+"EOF
+"#######################
+
