@@ -205,10 +205,10 @@ augroup END
 " colorization
 "#######################
 syntax enable
-set ofu=syntaxcomplete#Complete
+"set ofu=syntaxcomplete#Complete
 syntax on
 
-set background=dark
+"set background=dark
 if has('gui_running')
   set guioptions-=T  " no toolbar
 	colorscheme base16-default
@@ -216,7 +216,7 @@ if has('gui_running')
   set lines=50 columns=96 linespace=0
 else
 	colorscheme base16-default
-  set lines=50 columns=96 linespace=0
+"  set lines=50 columns=96 linespace=0
 endif
 " required to enable the status line"
 set cmdheight=2
