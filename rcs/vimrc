@@ -232,23 +232,28 @@ set laststatus=2
 "#######################
 nnoremap <F1> :MyFunctions<CR>
 nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>
+nnoremap <F6> :set spelllang=en<CR>
+nnoremap <F7> :set nospell<CR>
 nnoremap <F8> :TagbarToggle<CR>
 nnoremap <F9> :NERDTreeToggle<CR>
 nnoremap <F11> :cd %:p:g<CR>
-nnoremap ; :
 nnoremap sss :%s/\s\+$//<CR>
-nnoremap rerc :source $MYVIMRC<CR>
+nnoremap rrr :source ~/.vimrc<CR>
 nnoremap <F1> :call MyCommands()<CR>
-vnoremap <expr>  ++  VMATH_YankAndAnalyse()
-nnoremap         ++  vip++
 function! MyCommands()
   echo 'F1 -> prints this'
+  echo 'F3 -> !./a.out | less'
+  echo 'F4 -> !make - make sure a make file is present'
+  echo 'F5 -> force YCM rescan'
+  echo 'F6 -> set spellang=en - use z= to view correction list'
+  echo 'F7 -> set nospell'
   echo 'F8 -> Tagbar'
   echo 'F9 -> NERDTree'
+  echo 'F10 -> free to remap'
   echo 'sss -> removes whitespaces from EOL'
-  echo 'rerc -> sources vimrc'
-  echo '++ -> vmath list of numbers'
+  echo 'rrr -> sources vimrc'
 endfunction
+
 
 "##############c########
 "vim-latex"
