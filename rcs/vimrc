@@ -37,6 +37,10 @@ Plugin 'scrooloose/nerdtree'
 "YCM completions c/c++/python
 " After installing: run ~/.vim/scripts/ycm_fix.sh
 Plugin 'Valloric/YouCompleteMe'
+" After installing: run ~/.vim/scripts/ycm_fix.sh
+"
+Plugin 'suan/vim-instant-markdown'
+
 
 " All of your Plugins must be added before the following line
 call vundle#end()
@@ -215,7 +219,7 @@ if has('gui_running')
   hi Todo guifg=#40ffff guibg=#606060
   set lines=50 columns=96 linespace=0
 else
-	colorscheme base16-default
+	colorscheme elflord
 "  set lines=50 columns=96 linespace=0
 endif
 " required to enable the status line"
@@ -297,8 +301,6 @@ function! BC_jumpBackChar(num)
   let b:robstack = strpart(b:robstack, 0, strlen(b:robstack)-1)
   return l:char
 endfunction
-
-
 
 
 "#######################
