@@ -44,10 +44,10 @@ Plugin 'suan/vim-instant-markdown'
 "syntax highlighting / sublime like colors
 Plugin 'xolox/vim-easytags'
 Plugin 'xolox/vim-misc'
-Plugin 'sickill/vim-monokai'
 
-"dracula color theme
+"color themes
 Plugin 'zenorocha/dracula-theme', {'rtp': 'vim/'}
+Plugin 'sickill/vim-monokai'
 
 " All of your Plugins must be added before the following line
 call vundle#end()
