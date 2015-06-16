@@ -65,6 +65,7 @@ filetype indent plugin on
 " if this slows down vim (latex editing) then disable let g:loaded_matchparen = 0
 set showmatch
 
+
 "#######################
 " Real tab Indentation
 "#######################
@@ -193,13 +194,13 @@ set directory=~/tmp/swap/   " swap files
 
 " Make those folders automatically if they don't already exist.
 if !isdirectory(expand(&undodir))
-    call mkdir(expand(&undodir), "p")
+  call mkdir(expand(&undodir), "p")
 endif
 if !isdirectory(expand(&backupdir))
-    call mkdir(expand(&backupdir), "p")
+  call mkdir(expand(&backupdir), "p")
 endif
 if !isdirectory(expand(&directory))
-    call mkdir(expand(&directory), "p")
+  call mkdir(expand(&directory), "p")
 endif
 
 set history=1000
@@ -227,13 +228,15 @@ syntax on
 "set background=dark
 if has('gui_running')
   set guioptions-=T  " no toolbar
-	colorscheme dracula
-	set guifont=Ubuntu\ Mono\ 13
+  set background=dark
+  colorscheme monokai
+  set guifont=Ubuntu\ Mono\ 13
   hi Todo guifg=#40ffff guibg=#606060
   set lines=50 columns=96 linespace=0
 else
-	colorscheme elflord
-"  set lines=50 columns=96 linespace=0
+  set background=dark
+  colorscheme monokai
+  "  set lines=50 columns=96 linespace=0
 endif
 " required to enable the status line"
 set cmdheight=2
@@ -371,10 +374,10 @@ let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 let g:UltiSnips = {}
 "let g:UltiSnips.always_use_first_snippet = 1
 let g:UltiSnips.snipmate_ft_filter = {
-     \ 'default' : {'filetypes': ["FILETYPE", "_"] },
-     \ 'html'    : {'filetypes': ["html", "javascript", "_"] },
-     \ 'cpp'    : {'filetypes': [] },
-     \ }
+      \ 'default' : {'filetypes': ["FILETYPE", "_"] },
+      \ 'html'    : {'filetypes': ["html", "javascript", "_"] },
+      \ 'cpp'    : {'filetypes': [] },
+      \ }
 
 "#######################
 "EOF
