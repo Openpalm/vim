@@ -24,8 +24,6 @@ Plugin 'git://git.wincent.com/command-t.git'
 Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
 " emmet for high speed html/css editing.
 Plugin 'mattn/emmet-vim'
-" base-16 dark color scheme
-Plugin 'chriskempson/base16-vim'
 " Powerline
 Plugin 'powerline/powerline'
 " Ultisnips
@@ -36,17 +34,16 @@ Plugin 'majutsushi/tagbar'
 Plugin 'scrooloose/nerdtree'
 "YCM completions c/c++/python
 " After installing: run ~/.vim/scripts/ycm_fix.sh
-Plugin 'Valloric/YouCompleteMe'
+"Plugin 'Valloric/YouCompleteMe'
 " After installing: run ~/.vim/scripts/ycm_fix.sh
 "
+" syntax checking
+Plugin 'scrooloose/syntastic'
+
+"instant markdown
 Plugin 'suan/vim-instant-markdown'
 
-"syntax highlighting / sublime like colors
-Plugin 'xolox/vim-easytags'
-Plugin 'xolox/vim-misc'
-
 "color themes
-Plugin 'zenorocha/dracula-theme', {'rtp': 'vim/'}
 Plugin 'sickill/vim-monokai'
 
 " D syntax highlighting
