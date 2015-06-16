@@ -41,6 +41,13 @@ Plugin 'Valloric/YouCompleteMe'
 "
 Plugin 'suan/vim-instant-markdown'
 
+"syntax highlighting / sublime like colors
+Plugin 'xolox/vim-easytags'
+Plugin 'xolox/vim-misc'
+Plugin 'sickill/vim-monokai'
+
+"dracula color theme
+Plugin 'zenorocha/dracula-theme', {'rtp': 'vim/'}
 
 " All of your Plugins must be added before the following line
 call vundle#end()
@@ -60,6 +67,7 @@ set showmatch
 set smartindent
 set autoindent
 set tabstop=2
+set expandtab
 "set softtabstop=4
 "set conceallevel=1
 set shiftwidth=2
@@ -215,7 +223,8 @@ syntax on
 "set background=dark
 if has('gui_running')
   set guioptions-=T  " no toolbar
-	colorscheme base16-default
+	colorscheme dracula
+	set guifont=Ubuntu\ Mono\ 13
   hi Todo guifg=#40ffff guibg=#606060
   set lines=50 columns=96 linespace=0
 else
