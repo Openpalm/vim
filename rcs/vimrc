@@ -49,8 +49,12 @@ Plugin 'xolox/vim-misc'
 Plugin 'zenorocha/dracula-theme', {'rtp': 'vim/'}
 Plugin 'sickill/vim-monokai'
 
+" D syntax highlighting
+Plugin 'JesseKPhillips/d.vim'
+
 " All of your Plugins must be added before the following line
 call vundle#end()
+
 
 filetype indent plugin on
 
