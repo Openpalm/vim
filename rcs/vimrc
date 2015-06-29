@@ -251,8 +251,11 @@ set laststatus=2
 " custom aliases, universally shared
 " for convenience
 "#######################
-nnoremap <F1> :MyFunctions<CR>
-nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>
+nnoremap <F1> :call MyCommands()<CR>
+nnoremap <F2> :!cd ~/.vim && bash ~/.vim/getSubmodules.sh<CR>
+nnoremap <F3> :PluginUpdate<CR>
+nnoremap <F4> :!make<CR>
+nnoremap <F5> :!./a.out && less<CR>
 nnoremap <F6> :set spelllang=en<CR>
 nnoremap <F7> :set nospell<CR>
 nnoremap <F8> :TagbarToggle<CR>
@@ -260,12 +263,12 @@ nnoremap <F9> :NERDTreeToggle<CR>
 nnoremap <F11> :cd %:p:g<CR>
 nnoremap sss :%s/\s\+$//<CR>
 nnoremap rrr :source ~/.vimrc<CR>
-nnoremap <F1> :call MyCommands()<CR>
 function! MyCommands()
   echo 'F1 -> prints this'
-  echo 'F3 -> !./a.out | less'
+  echo 'F2 -> init step, get Vundle & other deps'
+  echo 'F3 -> execute vundle:PluginUpdate'
   echo 'F4 -> !make - make sure a make file is present'
-  echo 'F5 -> force YCM rescan'
+  echo 'F5 -> !./a.out | less'
   echo 'F6 -> set spellang=en - use z= to view correction list'
   echo 'F7 -> set nospell'
   echo 'F8 -> Tagbar'
@@ -351,12 +354,6 @@ nnoremap _ ddkkp
 "use qq to record, space to use the macro
 nnoremap <SPACE> @q
 "mapping gcc to gcc % -lm
-nnoremap <F4> :!make
-" be careful when using vim's console to check output. the console is
-" incomplete.
-nnoremap <F3> :! ./a.out <bar> less
-"making it quicker to source vimrc
-nnoremap <F2> :source ~/.vimrc
 
 
 
