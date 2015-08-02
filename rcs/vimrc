@@ -11,7 +11,6 @@ call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
 "auto save
 Plugin 'vim-scripts/vim-auto-save'
-
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
 " plugin on GitHub repo
@@ -180,6 +179,7 @@ set listchars+=nbsp:·
 "undo & backupdir
 "#######################
 
+let g:auto_save = 1
 set backup                        " enable backups
 set noswapfile                    " it's 2013, Vim.
 
