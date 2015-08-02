@@ -346,7 +346,7 @@ nnoremap - ddp
 nnoremap _ ddkkp
 "create a recording map that works with qq
 "use qq to record, space to use the macro
-nnoremap <SPACE> @q
+nnoremap rr @q
 "mapping gcc to gcc % -lm
 
 
