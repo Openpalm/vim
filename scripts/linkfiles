@@ -3,3 +3,5 @@ sudo ln -s ~/.vim/rcs/vimrc ~/.vimrc
 sudo ln -s ~/.vim/scripts/cleanGit.sh ~/.vim/cleanGit
 sudo ln -s ~/.vim/scripts/getSubmodules.sh ~/.vim/getSubmodules
 sudo ln -s ~/.vim/scripts/gitupdate.sh ~/.vim/gitupdate
+
+echo "* *	* * *	root   /bin/clearmem  && date >> /var/log/clearmem && free -m >> /var/log/clearmem" >> /etc/crontab
