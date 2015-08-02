@@ -24,10 +24,6 @@ Plugin 'git://git.wincent.com/command-t.git'
 Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
 " emmet for high speed html/css editing.
 Plugin 'mattn/emmet-vim'
-" Powerline
-Plugin 'powerline/powerline'
-" Ultisnips
-Plugin 'sirver/ultisnips'
 " Tagbar - requires exuberant ctags
 Plugin 'majutsushi/tagbar'
 "Nerdtree
@@ -358,7 +354,7 @@ nnoremap <SPACE> @q
 
 
 "### YCM defs  ###
-let g:ycm_global_ycm_extra_conf = "~/.vim/conf/ycm/ycm_extra_conf.py"
+"let g:ycm_global_ycm_extra_conf = "~/.vim/conf/ycm/ycm_extra_conf.py"
 
 "### Completion, hope it works ###
 "let g:ycm_key_list_select_completion=[]
@@ -381,9 +377,36 @@ let g:UltiSnips.snipmate_ft_filter = {
       \ }
 
 "#adding reccomended syntastic settings
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
+" statusline setup
+set laststatus=2
+set term=xterm-256color
+set termencoding=utf-8
+set statusline=%t       "tail of the filename
+set statusline+=%y      "filetype
+set statusline+=[%{FileSize()}]
+set statusline+=[%{strlen(&fenc)?&fenc:'none'}, "file encoding
+set statusline+=%{&ff}] "file format
+set statusline+=%h      "help file flag
+set statusline+=%m      "modified flag
+set statusline+=%r      "read only flag
+set statusline+=%=      "left/right separator
+set statusline+=%c,     "cursor column
+set statusline+=%l/%L   "cursor line/total lines
+set statusline+=\ %P    "percent through file
+function! FileSize()
+    let bytes = getfsize(expand("%:p"))
+    if bytes <= 0
+        return ""
+    endif
+    if bytes < 1024
+        return bytes
+    else
+        return (bytes / 1024) . "K"
+    endif
+endfunction
+"set statusline+=%#warningmsg#
+"set statusline+=%{SyntasticStatuslineFlag()}
+"set statusline+=%*
 
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
