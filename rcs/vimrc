@@ -15,12 +15,14 @@ Plugin 'vim-scripts/vim-auto-save'
 " Keep Plugin commands between vundle#begin/end.
 " plugin on GitHub repo
 Plugin 'tpope/vim-fugitive'
+"Matlab
+Plugin 'vim-scripts/MatlabFilesEdition'
 " The sparkup vim script is in a subdirectory of this repo called vim.
 " Pass the path to set the runtimepath properly.
 " good for html creation
-Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+"Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
 " emmet for high speed html/css editing.
-Plugin 'mattn/emmet-vim'
+"Plugin 'mattn/emmet-vim'
 " Tagbar - requires exuberant ctags
 Plugin 'majutsushi/tagbar'
 "Nerdtree
@@ -31,19 +33,19 @@ Plugin 'scrooloose/nerdtree'
 " After installing: run ~/.vim/scripts/ycm_fix.sh
 "
 " syntax checking
-Plugin 'scrooloose/syntastic'
+"Plugin 'scrooloose/syntastic'
 
 " auto completion
-Plugin 'Shougo/neocomplete'
+"Plugin 'Shougo/neocomplete'
 
 "instant markdown
-Plugin 'suan/vim-instant-markdown'
+"Plugin 'suan/vim-instant-markdown'
 
 "color themes
 Plugin 'sickill/vim-monokai'
 
 " D syntax highlighting
-Plugin 'JesseKPhillips/d.vim'
+"Plugin 'JesseKPhillips/d.vim'
 
 
 " All of your Plugins must be added before the following line
@@ -63,13 +65,8 @@ set showmatch
 "#######################
 " Real tab Indentation
 "#######################
-set smartindent
-set autoindent
-set tabstop=2
-set expandtab
-"set softtabstop=4
-"set conceallevel=1
-set shiftwidth=2
+set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
+set nu
 %retab
 set wrapscan
 
@@ -181,7 +178,7 @@ set listchars+=nbsp:·
 
 let g:auto_save = 1
 set backup                        " enable backups
-set noswapfile                    " it's 2013, Vim.
+set noswapfile
 
 set undodir=~/tmp/undo/     " undo files
 set backupdir=~/tmp/backup/ " backups
@@ -321,7 +318,7 @@ endfunction
 " goto file. include all
 " project files.
 "#######################
-"set path+=./**
+set path+=./**
 
 if has("multi_byte")
   if &termencoding == ""
