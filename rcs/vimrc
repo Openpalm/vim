@@ -16,13 +16,13 @@ Plugin 'vim-scripts/vim-auto-save'
 " plugin on GitHub repo
 Plugin 'tpope/vim-fugitive'
 "Matlab
-Plugin 'vim-scripts/MatlabFilesEdition'
+"Plugin 'vim-scripts/MatlabFilesEdition'
 " The sparkup vim script is in a subdirectory of this repo called vim.
 " Pass the path to set the runtimepath properly.
 " good for html creation
 "Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
 " emmet for high speed html/css editing.
-"Plugin 'mattn/emmet-vim'
+Plugin 'mattn/emmet-vim'
 " Tagbar - requires exuberant ctags
 Plugin 'majutsushi/tagbar'
 "Nerdtree
@@ -33,26 +33,27 @@ Plugin 'scrooloose/nerdtree'
 " After installing: run ~/.vim/scripts/ycm_fix.sh
 "
 " syntax checking
-"Plugin 'scrooloose/syntastic'
+Plugin 'scrooloose/syntastic'
 
 " auto completion
-"Plugin 'Shougo/neocomplete'
+Plugin 'Shougo/neocomplete'
 
 "instant markdown
 "Plugin 'suan/vim-instant-markdown'
 
 "color themes
-Plugin 'sickill/vim-monokai'
 
+"Plugin 'sickill/vim-monokai'
 " D syntax highlighting
 "Plugin 'JesseKPhillips/d.vim'
-
 
 " All of your Plugins must be added before the following line
 call vundle#end()
 
 
 filetype indent plugin on
+
+
 
 "#######################
 "default settings: default editor behaviour"
@@ -65,8 +66,11 @@ set showmatch
 "#######################
 " Real tab Indentation
 "#######################
-set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
+set tabstop=8 softtabstop=0 expandtab shiftwidth=4 
+set autoindent
+set smartindent
 set nu
+
 %retab
 set wrapscan
 
@@ -83,9 +87,9 @@ endif
 "#######################
 "space tabs, instead of real tabs.
 "#######################
-"set tabstop=4
+set tabstop=4
 "set noexpandtab
-"set expandtab
+set expandtab
 "set tabstop=2
 
 
@@ -214,21 +218,21 @@ augroup END
 " colorization
 "#######################
 syntax enable
-"set ofu=syntaxcomplete#Complete
+set ofu=syntaxcomplete#Complete
 syntax on
 
 "set background=dark
 if has('gui_running')
   set guioptions-=T  " no toolbar
-  set background=dark
+"  set background=dark
   colorscheme monokai
-  set guifont=Ubuntu\ Mono\ 13
+"  set guifont=Ubuntu\ Mono\ 13
   hi Todo guifg=#40ffff guibg=#606060
   set lines=50 columns=96 linespace=0
 else
-  set background=dark
-  colorscheme monokai
-  "  set lines=50 columns=96 linespace=0
+ " set background=dark " dark bg is nice, but guake transp. is nicer.
+  colorscheme goldenrod 
+  set lines=50 columns=96 linespace=0
 endif
 " required to enable the status line"
 set cmdheight=2
@@ -345,7 +349,6 @@ nnoremap _ ddkkp
 "use qq to record, space to use the macro
 nnoremap rr @q
 "mapping gcc to gcc % -lm
-
 
 
 "#adding reccomended syntastic settings
