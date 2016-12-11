@@ -43,6 +43,7 @@ Plugin 'Shougo/neocomplete'
 
 "color themes
 
+Plugin 'sentientmachine/erics_vim_syntax_and_color_highlighting'
 "Plugin 'sickill/vim-monokai'
 " D syntax highlighting
 "Plugin 'JesseKPhillips/d.vim'

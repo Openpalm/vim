@@ -27,7 +27,7 @@ let color6 = '45'
 let color5 = '220'
 
 " Gray
-let color2 = '245'
+let color2 = '119'
 " Dark Gray
 let color4 = '233'
 
