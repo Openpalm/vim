@@ -8,7 +8,6 @@
 
 unsigned int mkmask(int);
 void printBits(unsigned int);
-
 int issetBit(unsigned int, int);
 int setBit(unsigned int *, int);
 int unsetBit(unsigned int *, int);

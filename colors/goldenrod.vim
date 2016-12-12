@@ -13,7 +13,11 @@ endif
 let g:colors_name = "goldenrod"
 
 function <SID>set_color(name, fg, bg, ct)
-    "exe 'highlight ' . a:name . ' ctermfg=' . a:fg . ' ctermbg=' . a:bg . ' cterm=' . a:ct
+    "exe 
+    "'highlight ' . a:name . 
+    "' ctermfg=' . a:fg . 
+    "' ctermbg=' . a:bg . 
+    "' cterm=' . a:ct
     exe 'highlight ' . a:name . ' ctermfg=' . a:fg . ' cterm=' . a:ct
 endfunction
 
@@ -25,6 +29,7 @@ let color3 = '197'
 let color6 = '45'
 " Yellow
 let color5 = '220'
+"let color5 = '320'
 
 " Gray
 let color2 = '119'
@@ -71,7 +76,7 @@ call <SID>set_color("DiffAdd", "NONE", diffcolor4, "NONE")
 call <SID>set_color("DiffChange", "NONE", diffcolor1, "NONE")
 call <SID>set_color("DiffDelete", "NONE", diffcolor2, "NONE")
 call <SID>set_color("DiffText", "NONE", diffcolor3, "NONE")
-call <SID>set_color("Error", white, red, "NONE")
+call <SID>set_color("Error", color1, red, "NONE")
 call <SID>set_color("Function", color1, "NONE", "NONE")
 call <SID>set_color("Identifier", color8, "NONE", "NONE")
 call <SID>set_color("LineNr", white, "NONE", "NONE")
@@ -84,10 +89,10 @@ call <SID>set_color("Pmenu", color5, color10, "NONE")
 call <SID>set_color("PmenuSbar", color5, color11, "NONE")
 call <SID>set_color("PmenuSel", color6, color10, "NONE")
 call <SID>set_color("PmenuThumb", color5, color10, "NONE")
-call <SID>set_color("Search", white, search, "NONE")
+call <SID>set_color("Search", color4, search, "NONE")
 call <SID>set_color("Special", color9, "NONE", "NONE")
 call <SID>set_color("SpecialKey", color13, "NONE", "NONE")
-call <SID>set_color("SpellBad", "NONE", "NONE", "underline")
+call <SID>set_color("SpellBad", color4, "NONE", "underline")
 call <SID>set_color("SpellCap", "NONE", "NONE", "underline")
 call <SID>set_color("SpellLocal", "NONE", "NONE", "underline")
 call <SID>set_color("SpellRare", "NONE", "NONE", "underline")

@@ -43,7 +43,7 @@ Plugin 'Shougo/neocomplete'
 
 "color themes
 
-Plugin 'sentientmachine/erics_vim_syntax_and_color_highlighting'
+
 "Plugin 'sickill/vim-monokai'
 " D syntax highlighting
 "Plugin 'JesseKPhillips/d.vim'
@@ -221,6 +221,7 @@ augroup END
 syntax enable
 set ofu=syntaxcomplete#Complete
 syntax on
+set term=xterm-256color
 
 "set background=dark
 if has('gui_running')
@@ -350,12 +351,11 @@ nnoremap _ ddkkp
 "use qq to record, space to use the macro
 nnoremap rr @q
 "mapping gcc to gcc % -lm
-
+nnoremap ; :
 
 "#adding reccomended syntastic settings
 " statusline setup
 set laststatus=2
-set term=xterm-256color
 set termencoding=utf-8
 set statusline=%t       "tail of the filename
 set statusline+=%y      "filetype
@@ -380,9 +380,9 @@ function! FileSize()
         return (bytes / 1024) . "K"
     endif
 endfunction
-"set statusline+=%#warningmsg#
-"set statusline+=%{SyntasticStatuslineFlag()}
-"set statusline+=%*
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
 
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
@@ -399,4 +399,3 @@ autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 "#######################
 "EOF
 "#######################
-

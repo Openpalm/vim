@@ -4,32 +4,32 @@ using namespace std;
 
 class programming
 {
-		private:
-				int variable;
+    private:
+        int variable;
 
-		public:
+    public:
 
-				void input_value()
-				{
-						cout << "In function input_value, Enter an integer\n";
-						cin >> variable;
-				}
+        void input_value()
+        {
+            cout << "In function input_value, Enter an integer\n";
+            cin >> variable;
+        }
 
-				void output_value()
-				{
-						cout << "Variable entered is ";
-						cout << variable << "\n";
-				}
+        void output_value()
+        {
+            cout << "Variable entered is ";
+            cout << variable << "\n";
+        }
 };
 
 int main(void)
 {
-		programming object;
+    programming object;
 
-		object.input_value();
-		object.output_value();
+    object.input_value();
+    object.output_value();
 
-		//object.variable;  Will produce an error because variable is private
+    //object.variable;  Will produce an error because variable is private
 
-		return 0;
+    return 0;
 }
