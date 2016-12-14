@@ -101,6 +101,7 @@ set expandtab
 "#######################
 set ruler "Always show current position"
 set nu "enables line numbers "
+set relativenumber
 set foldmethod=indent
 "set foldnestmax=10
 set nofoldenable
