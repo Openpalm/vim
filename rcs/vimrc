@@ -37,9 +37,11 @@ Plugin 'scrooloose/syntastic'
 
 " auto completion
 Plugin 'Shougo/neocomplete'
+Plugin 'ludovicchabant/vim-gutentags'
 
 "instant markdown
 "Plugin 'suan/vim-instant-markdown'
+Plugin 'sickill/vim-monokai'
 
 "color themes
 
@@ -47,6 +49,7 @@ Plugin 'Shougo/neocomplete'
 "Plugin 'sickill/vim-monokai'
 " D syntax highlighting
 "Plugin 'JesseKPhillips/d.vim'
+Plugin 'derekwyatt/vim-scala'
 
 " All of your Plugins must be added before the following line
 call vundle#end()
@@ -54,6 +57,9 @@ call vundle#end()
 
 filetype indent plugin on
 
+set tags+=./.tags,.tags,./tags,"tags";
+let g:neotags_tags_filename = ".tags"
+let g:neotags_ctags_cmd = "ctags"
 
 
 "#######################
