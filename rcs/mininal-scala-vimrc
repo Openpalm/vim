@@ -1,139 +1,35 @@
 "#######################
-"init
+" Sane defaults
 "#######################
+
 set nocompatible
-filetype off
+set encoding=utf-8
+filetype indent plugin on
+set tabstop=4 softtabstop=0 expandtab shiftwidth=4 
+set autoindent
+set smartindent
+set wrapscan
+set showmatch
+set ruler
+set hlsearch "highlight search"
+set cmdheight=2
+set laststatus=2
+colorscheme  goldenrod
+syntax on
+set nu
+
+%retab
 
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 " let Vundle manage Vundle, required
 Plugin 'gmarik/Vundle.vim'
-Plugin 'vim-scripts/vim-auto-save'
-Plugin 'tpope/vim-fugitive'
 Plugin 'majutsushi/tagbar'
 Plugin 'scrooloose/nerdtree'
-Plugin 'scrooloose/syntastic'
-Plugin 'sickill/vim-monokai'
 Plugin 'derekwyatt/vim-scala'
-
 " All of your Plugins must be added before the following line
 call vundle#end()
-
-
-filetype indent plugin on
-
-set tags+=./.tags,.tags,./tags,"tags";
-let g:neotags_tags_filename = ".tags"
-let g:neotags_ctags_cmd = "ctags"
-
-
-"#######################
-"default settings: default editor behaviour"
-"#######################
-"#######################
-" if this slows down vim (latex editing) then disable let g:loaded_matchparen = 0
-set showmatch
-
-
-"#######################
-" Real tab Indentation
-"#######################
-set tabstop=8 softtabstop=0 expandtab shiftwidth=4 
-set autoindent
-set smartindent
-set nu
-
-%retab
-set wrapscan
-
-if exists("*shiftwidth")
-  func! s:sw()
-    return shiftwidth()!
-  endfunc
-else
-  func! s:sw()
-    return &sw
-  endfunc
-endif
-
-"#######################
-"space tabs, instead of real tabs.
-"#######################
-set tabstop=4
-"set noexpandtab
-set expandtab
-"set tabstop=2
-
-
-
-
-"#######################
-"ruler and measurements
-"#######################
-set ruler "Always show current position"
-set nu "enables line numbers "
-set relativenumber
-set foldmethod=indent
-"set foldnestmax=10
-set nofoldenable
-set foldlevel=1
-
-set hlsearch "highlight search"
-" Set this to a group from :help highlight-default
-let s:hl_group = 'ErrorMsg'
-
-function! s:HlNext()
-  call s:HlClear()
-  let param = getreg('/')
-  let s:next_match = matchadd(s:hl_group, '\%#'.param)
-  redraw
-endfunction
-
-function! s:HlMatch()
-  let cmd_type = getcmdtype()
-  if cmd_type == '/' || cmd_type == '?'
-    return "\<cr>:call ".s:SID()."HlNext()\<cr>"
-  endif
-  return "\<cr>"
-endfunction
-
-function! s:HlClear()
-  silent! call matchdelete(s:next_match)
-endfunction
-
-function! s:SID()
-  return matchstr(expand('<sfile>'), '<SNR>\d\+_\zeSID$')
-endfun
-
-nnoremap <silent> n n:call <sid>HlNext()<enter>
-nnoremap <silent> N N:call <sid>HlNext()<enter>
-cnoremap <silent> <expr> <enter> <sid>HlMatch()
-
-
-highlight ColorColumn ctermbg=red
-call matchadd('ColorColumn', '\%81v', 100)
-
-
-
-
-"#######################
-"offer completion with a menu"
-"#######################
-"set completeopt=menu,menuone,longest,preview
-"let g:neocomplcache_enable_at_startup = 1
-
-set wildmenu
-set wildmode=list:longest
-
-
-
-"#######################
-"default encoding"
-"#######################
-set encoding=utf-8
-
-
 
 
 "#######################
@@ -188,31 +84,6 @@ augroup END
 
 
 
-"#######################
-" colorization
-"#######################
-syntax enable
-set ofu=syntaxcomplete#Complete
-syntax on
-set term=xterm-256color
-
-"set background=dark
-if has('gui_running')
-  set guioptions-=T  " no toolbar
-"  set background=dark
-  colorscheme monokai
-"  set guifont=Ubuntu\ Mono\ 13
-  hi Todo guifg=#40ffff guibg=#606060
-  set lines=50 columns=96 linespace=0
-else
- " set background=dark " dark bg is nice, but guake transp. is nicer.
-  colorscheme goldenrod 
-  set lines=50 columns=96 linespace=0
-endif
-" required to enable the status line"
-set cmdheight=2
-set laststatus=2
-
 
 
 
@@ -222,40 +93,33 @@ set laststatus=2
 " for convenience
 "#######################
 nnoremap <F1> :call MyCommands()<CR>
-nnoremap <F2> :!cd ~/.vim && bash ~/.vim/getSubmodules.sh<CR>
+nnoremap <F2> :PluginInstall<CR>
 nnoremap <F3> :PluginUpdate<CR>
-nnoremap <F4> :!make<CR>
-nnoremap <F5> :!./a.out && less<CR>
+nnoremap <F4> :PluginClean<CR>
+nnoremap <F5> :set spelllang=de<CR>
 nnoremap <F6> :set spelllang=en<CR>
 nnoremap <F7> :set nospell<CR>
 nnoremap <F8> :TagbarToggle<CR>
 nnoremap <F9> :NERDTreeToggle<CR>
-nnoremap <F11> :cd %:p:g<CR>
+nnoremap <C-s>:wa!<CR>
 nnoremap sss :%s/\s\+$//<CR>
 nnoremap rrr :source ~/.vimrc<CR>
 function! MyCommands()
-  echo 'F1 -> prints this'
-  echo 'F2 -> init step, get Vundle & other deps'
-  echo 'F3 -> execute vundle:PluginUpdate'
-  echo 'F4 -> !make - make sure a make file is present'
-  echo 'F5 -> !./a.out | less'
-  echo 'F6 -> set spellang=en - use z= to view correction list'
-  echo 'F7 -> set nospell'
-  echo 'F8 -> Tagbar'
-  echo 'F9 -> NERDTree'
-  echo 'F10 -> free to remap'
-  echo 'sss -> removes whitespaces from EOL'
-  echo 'rrr -> sources vimrc'
+
+
+echo '<F1> :call MyCommands()<CR>'
+echo '<F2> :PluginInstall<CR>'
+echo '<F3> :PluginUpdate<CR>'
+echo '<F4> :PluginClean<CR>'
+echo '<F5> :set spelllang=de<CR>'
+echo '<F6> :set spelllang=en<CR>'
+echo '<F7> :set nospell<CR>'
+echo '<F8> :TagbarToggle<CR>'
+echo '<F9> :NERDTreeToggle<CR>'
+echo 'sss :%s/\s\+$//<CR>'
+echo 'rrr :source ~/.vimrc<CR>'
+
 endfunction
-
-
-"##############c########
-"vim-latex"
-"#######################
-let g:Imap_UsePlaceHolders = 0
-set backspace +=start
-
-
 
 
 "#######################
@@ -291,23 +155,6 @@ function! BC_jumpBackChar(num)
   let b:robstack = strpart(b:robstack, 0, strlen(b:robstack)-1)
   return l:char
 endfunction
-
-
-"#######################
-" goto file. include all
-" project files.
-"#######################
-set path+=./**
-
-if has("multi_byte")
-  if &termencoding == ""
-    let &termencoding = &encoding
-  endif
-  set encoding=utf-8
-  setglobal fileencoding=utf-8
-  "setglobal bomb
-  set fileencodings=ucs-bom,utf-8,latin1
-endif
 
 
 "#######################
@@ -353,14 +200,6 @@ function! FileSize()
         return (bytes / 1024) . "K"
     endif
 endfunction
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
 
 " Enable omni completion.
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
@@ -368,6 +207,7 @@ autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+autocmd FileType scala setlocal omnifunc=scalacomplete#CompleteTags
 
 "#######################
 "EOF

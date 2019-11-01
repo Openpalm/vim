@@ -1,1 +1,1 @@
-scripts/cleanGit.sh
+for d in *; do rm -rf $d/.git; done
