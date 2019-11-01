@@ -9,11 +9,9 @@ call vundle#begin()
 
 " let Vundle manage Vundle, required
 Plugin 'gmarik/Vundle.vim'
-Plugin 'vim-scripts/vim-auto-save'
 Plugin 'tpope/vim-fugitive'
-Plugin 'majutsushi/tagbar'
 Plugin 'scrooloose/nerdtree'
-Plugin 'scrooloose/syntastic'
+"Plugin 'scrooloose/syntastic'
 Plugin 'sickill/vim-monokai'
 Plugin 'derekwyatt/vim-scala'
 
@@ -73,13 +71,12 @@ set expandtab
 "#######################
 set ruler "Always show current position"
 set nu "enables line numbers "
-set relativenumber
 set foldmethod=indent
 "set foldnestmax=10
 set nofoldenable
 set foldlevel=1
 
-set hlsearch "highlight search"
+    set hlsearch "highlight search"
 " Set this to a group from :help highlight-default
 let s:hl_group = 'ErrorMsg'
 
@@ -200,7 +197,7 @@ set term=xterm-256color
 if has('gui_running')
   set guioptions-=T  " no toolbar
 "  set background=dark
-  colorscheme monokai
+  colorscheme pablo
 "  set guifont=Ubuntu\ Mono\ 13
   hi Todo guifg=#40ffff guibg=#606060
   set lines=50 columns=96 linespace=0
@@ -267,6 +264,8 @@ inoremap _[ []<Esc>:call BC_AddChar("]")<CR>i
 inoremap _" ""<Esc>:call BC_AddChar("\"")<CR>i
 inoremap _' ''<Esc>:call BC_AddChar("\'")<CR>i
 
+hi MatchParen cterm=bold ctermbg=none ctermfg=magenta
+
 
 " jump out of parenthesis, used with the above functions
 inoremap <C-j> <Esc>:call search(BC_GetChar(), "W")<CR>a
@@ -326,7 +325,6 @@ nnoremap rr @q
 "mapping gcc to gcc % -lm
 nnoremap ; :
 
-"#adding reccomended syntastic settings
 " statusline setup
 set laststatus=2
 set termencoding=utf-8
@@ -337,30 +335,9 @@ set statusline+=[%{strlen(&fenc)?&fenc:'none'}, "file encoding
 set statusline+=%{&ff}] "file format
 set statusline+=%h      "help file flag
 set statusline+=%m      "modified flag
-set statusline+=%r      "read only flag
 set statusline+=%=      "left/right separator
-set statusline+=%c,     "cursor column
-set statusline+=%l/%L   "cursor line/total lines
-set statusline+=\ %P    "percent through file
-function! FileSize()
-    let bytes = getfsize(expand("%:p"))
-    if bytes <= 0
-        return ""
-    endif
-    if bytes < 1024
-        return bytes
-    else
-        return (bytes / 1024) . "K"
-    endif
-endfunction
 set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
-
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
 
 " Enable omni completion.
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
