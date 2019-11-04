@@ -1,5 +1,14 @@
 #brew install ctags #we on osx now.
-rm -rf  ~/.vim/bundle/Vundle.vim
 git clone https://github.com/VundleVim/Vundle.vim ~/.vim/bundle/Vundle.vim
-mv ~/.vimrc ~/vimrc-legacy00
+
+VRCPATH=~/.vimrc
+SRCPATH=~/.screenrc
+
+if test -f "$VRCPATH"; then mv ~/.vimrc ~/vimrc-legacy-"`date`";fi
+if test -f "$SRCPATH"; then mv ~/.screenrc ~/screen-legacy-"`date`";fi
+
 ln -s ~/.vim/scripts/rcs/vimrc ~/.vimrc
+ln -s ~/.vim/scripts/rcs/screenrc ~/.screenrc
+
+vim +PluginInstall +qall
+vim +PluginClean
