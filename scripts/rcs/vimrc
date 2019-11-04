@@ -1,150 +1,171 @@
-"#######################
-"init
-"#######################
-set nocompatible
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => General
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" load plugins from vundle
 filetype off
 
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
-" let Vundle manage Vundle, required
-Plugin 'gmarik/Vundle.vim'
-Plugin 'tpope/vim-fugitive'
+" let vundle manage vundle
+Plugin 'gmarik/vundle'
+
+" utilities
+Plugin 'kien/ctrlp.vim' " fuzzy find files
+Plugin 'benmills/vimux'
+Plugin 'tpope/vim-fugitive' " the ultimate git helper
+Plugin 'tpope/vim-commentary' " comment/uncomment lines with gcc or gc in visual mode
+Plugin 'Shougo/neocomplete' " default basic auto complete and suggestions
+Plugin 'Shougo/neosnippet'
+Plugin 'Shougo/neosnippet-snippets'
+Plugin 'majutsushi/tagbar'
 Plugin 'scrooloose/nerdtree'
-"Plugin 'scrooloose/syntastic'
-Plugin 'sickill/vim-monokai'
+Plugin 'kana/vim-smartinput'
+
+" colorschemes
+Plugin 'chriskempson/base16-vim'
+Plugin 'morhetz/gruvbox'
+
+" JavaScript plugins
+"
+Plugin 'pangloss/vim-javascript'
+Plugin 'jelera/vim-javascript-syntax'
 Plugin 'derekwyatt/vim-scala'
 
-" All of your Plugins must be added before the following line
 call vundle#end()
+filetype plugin indent on
 
 
-filetype indent plugin on
+set nocompatible " not compatible with vi
+set autoread " detect when a file is changed
 
-set tags+=./.tags,.tags,./tags,"tags";
-let g:neotags_tags_filename = ".tags"
-let g:neotags_ctags_cmd = "ctags"
+" make backspace behave in a sane manner
+set backspace=indent,eol,start
 
+" set a map leader for more key combos
+let mapleader = ','
 
-"#######################
-"default settings: default editor behaviour"
-"#######################
-"#######################
-" if this slows down vim (latex editing) then disable let g:loaded_matchparen = 0
-set showmatch
+" Tab control
+set noexpandtab " tabs ftw
+set smarttab " tab respects 'tabstop', 'shiftwidth', and 'softtabstop'
+set tabstop=2 " the visible width of tabs
+set softtabstop=2 " edit as if the tabs are 4 characters wide
+set shiftwidth=2 " number of spaces to use for indent and unindent
+set shiftround " round indent to a multiple of 'shiftwidth'
+retab
 
+set clipboard=unnamed
 
-"#######################
-" Real tab Indentation
-"#######################
-set tabstop=8 softtabstop=0 expandtab shiftwidth=4 
-set autoindent
-set smartindent
-set nu
+" faster redrawing
+set ttyfast
 
-%retab
-set wrapscan
-
-if exists("*shiftwidth")
-  func! s:sw()
-    return shiftwidth()!
-  endfunc
-else
-  func! s:sw()
-    return &sw
-  endfunc
-endif
-
-"#######################
-"space tabs, instead of real tabs.
-"#######################
-set tabstop=4
-"set noexpandtab
-set expandtab
-"set tabstop=2
-
-
-
-
-"#######################
-"ruler and measurements
-"#######################
-set ruler "Always show current position"
-set nu "enables line numbers "
-set foldmethod=indent
-"set foldnestmax=10
-set nofoldenable
+" code folding settings
+set foldmethod=syntax " fold based on indent
+set foldnestmax=10 " deepest fold is 10 levels
+set nofoldenable " don't fold by default
 set foldlevel=1
 
-    set hlsearch "highlight search"
-" Set this to a group from :help highlight-default
-let s:hl_group = 'ErrorMsg'
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => User Interface
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-function! s:HlNext()
-  call s:HlClear()
-  let param = getreg('/')
-  let s:next_match = matchadd(s:hl_group, '\%#'.param)
-  redraw
+" Searching
+set ignorecase " case insensitive searching
+set smartcase " case-sensitive if expresson contains a capital letter
+set hlsearch
+set incsearch " set incremental search, like modern browsers
+set nolazyredraw " don't redraw while executing macros
+
+set magic " Set magic on, for regex
+
+set showmatch " show matching braces
+set mat=2 " how many tenths of a second to blink
+
+" switch syntax highlighting on
+syntax on
+
+set encoding=utf8
+let base16colorspace=256  " Access colors present in 256 colorspace"
+set t_Co=256 " Explicitly tell vim that the terminal supports 256 colors"
+set background=dark
+colorscheme gruvbox
+
+set number
+
+set autoindent " automatically set indent of new line
+set smartindent
+
+set laststatus=2 " show the satus line all the time
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Mappings
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+map <leader>ev :e! ~/.vimrc<cr> " edit ~/.vimrc
+
+map <leader>wc :wincmd q<cr>
+
+" moving up and down work as you would expect
+nnoremap <silent> j gj
+nnoremap <silent> k gk
+
+" helpers for dealing with other people's code
+nmap \t :set ts=4 sts=4 sw=4 noet<cr>
+nmap \s :set ts=4 sts=4 sw=4 et<cr>
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Functions
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+map <C-h> :call WinMove('h')<cr>
+map <C-j> :call WinMove('j')<cr>
+map <C-k> :call WinMove('k')<cr>
+map <C-l> :call WinMove('l')<cr>
+
+" Window movement shortcuts
+" move to the window in the direction shown, or create a new window
+function! WinMove(key)
+    let t:curwin = winnr()
+    exec "wincmd ".a:key
+    if (t:curwin == winnr())
+        if (match(a:key,'[jk]'))
+            wincmd v
+        else
+            wincmd s
+        endif
+        exec "wincmd ".a:key
+    endif
 endfunction
 
-function! s:HlMatch()
-  let cmd_type = getcmdtype()
-  if cmd_type == '/' || cmd_type == '?'
-    return "\<cr>:call ".s:SID()."HlNext()\<cr>"
-  endif
-  return "\<cr>"
-endfunction
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Plugin settings
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-function! s:HlClear()
-  silent! call matchdelete(s:next_match)
-endfunction
+" close NERDTree after a file is opened
+let g:NERDTreeQuitOnOpen=0
+" show hidden files in NERDTree
+let NERDTreeShowHidden=1
+" Toggle NERDTree
+nmap <silent> <leader>k :NERDTreeToggle<cr>
+" expand to the path of the file in the current buffer
+nmap <silent> <leader>y :NERDTreeFind<cr>
 
-function! s:SID()
-  return matchstr(expand('<sfile>'), '<SNR>\d\+_\zeSID$')
-endfun
+" map fuzzyfinder (CtrlP) plugin
+" nmap <silent> <leader>t :CtrlP<cr>
+nmap <silent> <leader>r :CtrlPBuffer<cr>
+let g:ctrlp_map='<leader>t'
+let g:ctrlp_dotfiles=1
+let g:ctrlp_working_path_mode = 'ra'
 
-nnoremap <silent> n n:call <sid>HlNext()<enter>
-nnoremap <silent> N N:call <sid>HlNext()<enter>
-cnoremap <silent> <expr> <enter> <sid>HlMatch()
+" CtrlP ignore patterns
+let g:ctrlp_custom_ignore = {
+            \ 'dir': '\.git$\|node_modules$\|\.hg$\|\.svn$',
+            \ 'file': '\.exe$\|\.so$'
+            \ }
 
-
-highlight ColorColumn ctermbg=red
-call matchadd('ColorColumn', '\%81v', 100)
-
-
-
-
-"#######################
-"offer completion with a menu"
-"#######################
-"set completeopt=menu,menuone,longest,preview
-"let g:neocomplcache_enable_at_startup = 1
-
-set wildmenu
-set wildmode=list:longest
-
-
-
-"#######################
-"default encoding"
-"#######################
-set encoding=utf-8
-
-
-
-
-"#######################
-"that awesome looking trail
-"takes care of whitespaces
-"#######################
-set list
-set listchars=""
-"set listchars+=eol:e
-set listchars+=tab:»·
-set listchars+=trail:·
-set listchars+=extends:>
-"set listchars+=precedes:<
-set listchars+=nbsp:·
+" search the nearest ancestor that contains .git, .hg, .svn
+let g:ctrlp_working_path_mode = 2
 
 
 "#######################
@@ -170,10 +191,10 @@ if !isdirectory(expand(&directory))
   call mkdir(expand(&directory), "p")
 endif
 
-set history=1000
+set history=10000
 set undofile "we like the undo file"
-set undolevels=1000
-set undoreload=1000
+set undolevels=10000
+set undoreload=10000
 " swap dir
 augroup NoSimulataneousEdits
   autocmd!
@@ -186,145 +207,113 @@ augroup END
 
 
 "#######################
-" colorization
-"#######################
-syntax enable
-set ofu=syntaxcomplete#Complete
-syntax on
-set term=xterm-256color
-
-"set background=dark
-if has('gui_running')
-  set guioptions-=T  " no toolbar
-"  set background=dark
-  colorscheme pablo
-"  set guifont=Ubuntu\ Mono\ 13
-  hi Todo guifg=#40ffff guibg=#606060
-  set lines=50 columns=96 linespace=0
-else
- " set background=dark " dark bg is nice, but guake transp. is nicer.
-  colorscheme goldenrod 
-  set lines=50 columns=96 linespace=0
-endif
-" required to enable the status line"
-set cmdheight=2
-set laststatus=2
-
-
-
-
-
-"#######################
 " custom aliases, universally shared
 " for convenience
 "#######################
 nnoremap <F1> :call MyCommands()<CR>
-nnoremap <F2> :!cd ~/.vim && bash ~/.vim/getSubmodules.sh<CR>
+nnoremap <F2> :PluginInstall<CR>
 nnoremap <F3> :PluginUpdate<CR>
-nnoremap <F4> :!make<CR>
-nnoremap <F5> :!./a.out && less<CR>
+nnoremap <F4> :PluginClean<CR>
+nnoremap <F5> :set spelllang=de<CR>
 nnoremap <F6> :set spelllang=en<CR>
 nnoremap <F7> :set nospell<CR>
 nnoremap <F8> :TagbarToggle<CR>
 nnoremap <F9> :NERDTreeToggle<CR>
-nnoremap <F11> :cd %:p:g<CR>
 nnoremap sss :%s/\s\+$//<CR>
 nnoremap rrr :source ~/.vimrc<CR>
 function! MyCommands()
-  echo 'F1 -> prints this'
-  echo 'F2 -> init step, get Vundle & other deps'
-  echo 'F3 -> execute vundle:PluginUpdate'
-  echo 'F4 -> !make - make sure a make file is present'
-  echo 'F5 -> !./a.out | less'
-  echo 'F6 -> set spellang=en - use z= to view correction list'
-  echo 'F7 -> set nospell'
-  echo 'F8 -> Tagbar'
-  echo 'F9 -> NERDTree'
-  echo 'F10 -> free to remap'
-  echo 'sss -> removes whitespaces from EOL'
-  echo 'rrr -> sources vimrc'
+
+
+echo '<F1> :call MyCommands()<CR>'
+echo '<F2> :PluginInstall<CR>'
+echo '<F3> :PluginUpdate<CR>'
+echo '<F4> :PluginClean<CR>'
+echo '<F5> :set spelllang=de<CR>'
+echo '<F6> :set spelllang=en<CR>'
+echo '<F7> :set nospell<CR>'
+echo '<F8> :TagbarToggle<CR>'
+echo '<F9> :NERDTreeToggle<CR>'
+echo 'sss :%s/\s\+$//<CR>'
+echo 'rrr :source ~/.vimrc<CR>'
+
 endfunction
 
 
-"##############c########
-"vim-latex"
-"#######################
-let g:Imap_UsePlaceHolders = 0
-set backspace +=start
+"""#######################
+"""bracket completion"
+"""#######################
+""inoremap _( ()<Esc>:call BC_AddChar(")")<CR>i
+""inoremap _{ {<CR>}<Esc>:call BC_AddChar("}")<CR><Esc>kA<CR>
+""inoremap _[ []<Esc>:call BC_AddChar("]")<CR>i
+""inoremap _" ""<Esc>:call BC_AddChar("\"")<CR>i
+""inoremap _' ''<Esc>:call BC_AddChar("\'")<CR>i
+""
+""
+""" jump out of parenthesis, used with the above functions
+""inoremap <C-j> <Esc>:call search(BC_GetChar(), "W")<CR>a
+""
+""function! BC_AddChar(schar)
+""  if exists("b:robstack")
+""    let b:robstack = b:robstack . a:schar
+""  else
+""    let b:robstack = a:schar
+""  endif
+""endfunction
+""
+""function! BC_GetChar()
+""  let l:char = b:robstack[strlen(b:robstack)-1]
+""  let b:robstack = strpart(b:robstack, 0, strlen(b:robstack)-1)
+""  return l:char
+""endfunction
+""
+""
+""function! BC_jumpBackChar(num)
+""  let l:char = b:robstack[strlen(b:robstack)-1]
+""  let b:robstack = strpart(b:robstack, 0, strlen(b:robstack)-1)
+""  return l:char
+""endfunction
+""
+""
+" Enable omni completion.
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+autocmd FileType scala setlocal omnifunc=scalacomplete#CompleteScala
 
+" neocomplete  https://kimikimi714.hatenablog.com/entry/2015/06/05/180000
+let g:neocomplete#enable_at_startup = 1
+" Use smartcase.
+let g:neocomplete#enable_smart_case = 1
+ " Use underbar completion.
+let g:neocomplete#enable_underbar_completion = 1
+" ユーザ定義の辞書を指定
+let g:neocomplete#sources#dictionary#dictionaries = {
+  \ 'default' : '',
+  \ 'scala' : $HOME . '/.vim/dict/scala.dict',
+  \ }
+" Plugin key-mappings.
+inoremap <expr><C-g>     neocomplete#undo_completion()
+inoremap <expr><C-l>     neocomplete#complete_common_string()
 
-
-
-"#######################
-"bracket completion"
-"#######################
-inoremap _( ()<Esc>:call BC_AddChar(")")<CR>i
-inoremap _{ {<CR>}<Esc>:call BC_AddChar("}")<CR><Esc>kA<CR>
-inoremap _[ []<Esc>:call BC_AddChar("]")<CR>i
-inoremap _" ""<Esc>:call BC_AddChar("\"")<CR>i
-inoremap _' ''<Esc>:call BC_AddChar("\'")<CR>i
-
-hi MatchParen cterm=bold ctermbg=none ctermfg=magenta
-
-
-" jump out of parenthesis, used with the above functions
-inoremap <C-j> <Esc>:call search(BC_GetChar(), "W")<CR>a
-
-function! BC_AddChar(schar)
-  if exists("b:robstack")
-    let b:robstack = b:robstack . a:schar
-  else
-    let b:robstack = a:schar
-  endif
+" Recommended key-mappings.
+" <CR>: close popup and save indent.
+inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+function! s:my_cr_function()
+  return neocomplete#close_popup() . "\<CR>"
 endfunction
-
-function! BC_GetChar()
-  let l:char = b:robstack[strlen(b:robstack)-1]
-  let b:robstack = strpart(b:robstack, 0, strlen(b:robstack)-1)
-  return l:char
-endfunction
-
-
-function! BC_jumpBackChar(num)
-  let l:char = b:robstack[strlen(b:robstack)-1]
-  let b:robstack = strpart(b:robstack, 0, strlen(b:robstack)-1)
-  return l:char
-endfunction
+" <TAB>: completion.
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+" <C-h>, <BS>: close popup and delete backword char.
+inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+inoremap <expr><C-y>  neocomplete#close_popup()
+inoremap <expr><C-e>  neocomplete#cancel_popup()
 
 
-"#######################
-" goto file. include all
-" project files.
-"#######################
-set path+=./**
-
-if has("multi_byte")
-  if &termencoding == ""
-    let &termencoding = &encoding
-  endif
-  set encoding=utf-8
-  setglobal fileencoding=utf-8
-  "setglobal bomb
-  set fileencodings=ucs-bom,utf-8,latin1
-endif
-
-
-"#######################
-"custom commands -
-"learn vimscript the hardway
-" "#######################
-
-
-"move line down
-nnoremap - ddp
-"move line up
-nnoremap _ ddkkp
-"create a recording map that works with qq
-"use qq to record, space to use the macro
-nnoremap rr @q
-"mapping gcc to gcc % -lm
-nnoremap ; :
-
+" custom status line
+"#adding reccomended syntastic settings
 " statusline setup
 set laststatus=2
 set termencoding=utf-8
@@ -335,17 +324,33 @@ set statusline+=[%{strlen(&fenc)?&fenc:'none'}, "file encoding
 set statusline+=%{&ff}] "file format
 set statusline+=%h      "help file flag
 set statusline+=%m      "modified flag
+set statusline+=%r      "read only flag
 set statusline+=%=      "left/right separator
-set statusline+=%#warningmsg#
-set statusline+=%*
+set statusline+=%c,     "cursor column
+set statusline+=%l/%L   "cursor line/total lines
+set statusline+=\ %P    "percent through file
+function! FileSize()
+    let bytes = getfsize(expand("%:p"))
+    if bytes <= 0
+        return ""
+    endif
+    if bytes < 1024
+        return bytes
+    else
+        return (bytes / 1024) . "K"
+    endif
+endfunction
 
-" Enable omni completion.
-autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 
 "#######################
-"EOF
+"that awesome looking trail
+"takes care of whitespaces
 "#######################
+set list
+set listchars=""
+"set listchars+=eol:e
+set listchars+=tab:»·
+set listchars+=trail:·
+set listchars+=extends:>
+"set listchars+=precedes:<
+set listchars+=nbsp:·

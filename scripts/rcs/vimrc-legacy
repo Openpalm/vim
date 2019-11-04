@@ -1,0 +1,351 @@
+"#######################
+"init
+"#######################
+set nocompatible
+filetype off
+
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+" let Vundle manage Vundle, required
+Plugin 'gmarik/Vundle.vim'
+Plugin 'tpope/vim-fugitive'
+Plugin 'scrooloose/nerdtree'
+"Plugin 'scrooloose/syntastic'
+Plugin 'sickill/vim-monokai'
+Plugin 'derekwyatt/vim-scala'
+
+" All of your Plugins must be added before the following line
+call vundle#end()
+
+
+filetype indent plugin on
+
+set tags+=./.tags,.tags,./tags,"tags";
+let g:neotags_tags_filename = ".tags"
+let g:neotags_ctags_cmd = "ctags"
+
+
+"#######################
+"default settings: default editor behaviour"
+"#######################
+"#######################
+" if this slows down vim (latex editing) then disable let g:loaded_matchparen = 0
+set showmatch
+
+
+"#######################
+" Real tab Indentation
+"#######################
+set tabstop=8 softtabstop=0 expandtab shiftwidth=4 
+set autoindent
+set smartindent
+set nu
+
+%retab
+set wrapscan
+
+if exists("*shiftwidth")
+  func! s:sw()
+    return shiftwidth()!
+  endfunc
+else
+  func! s:sw()
+    return &sw
+  endfunc
+endif
+
+"#######################
+"space tabs, instead of real tabs.
+"#######################
+set tabstop=4
+"set noexpandtab
+set expandtab
+"set tabstop=2
+
+
+
+
+"#######################
+"ruler and measurements
+"#######################
+set ruler "Always show current position"
+set nu "enables line numbers "
+set foldmethod=indent
+"set foldnestmax=10
+set nofoldenable
+set foldlevel=1
+
+    set hlsearch "highlight search"
+" Set this to a group from :help highlight-default
+let s:hl_group = 'ErrorMsg'
+
+function! s:HlNext()
+  call s:HlClear()
+  let param = getreg('/')
+  let s:next_match = matchadd(s:hl_group, '\%#'.param)
+  redraw
+endfunction
+
+function! s:HlMatch()
+  let cmd_type = getcmdtype()
+  if cmd_type == '/' || cmd_type == '?'
+    return "\<cr>:call ".s:SID()."HlNext()\<cr>"
+  endif
+  return "\<cr>"
+endfunction
+
+function! s:HlClear()
+  silent! call matchdelete(s:next_match)
+endfunction
+
+function! s:SID()
+  return matchstr(expand('<sfile>'), '<SNR>\d\+_\zeSID$')
+endfun
+
+nnoremap <silent> n n:call <sid>HlNext()<enter>
+nnoremap <silent> N N:call <sid>HlNext()<enter>
+cnoremap <silent> <expr> <enter> <sid>HlMatch()
+
+
+highlight ColorColumn ctermbg=red
+call matchadd('ColorColumn', '\%81v', 100)
+
+
+
+
+"#######################
+"offer completion with a menu"
+"#######################
+"set completeopt=menu,menuone,longest,preview
+"let g:neocomplcache_enable_at_startup = 1
+
+set wildmenu
+set wildmode=list:longest
+
+
+
+"#######################
+"default encoding"
+"#######################
+set encoding=utf-8
+
+
+
+
+"#######################
+"that awesome looking trail
+"takes care of whitespaces
+"#######################
+set list
+set listchars=""
+"set listchars+=eol:e
+set listchars+=tab:»·
+set listchars+=trail:·
+set listchars+=extends:>
+"set listchars+=precedes:<
+set listchars+=nbsp:·
+
+
+"#######################
+"undo & backupdir
+"#######################
+
+let g:auto_save = 1
+set backup                        " enable backups
+set noswapfile
+
+set undodir=~/tmp/undo/     " undo files
+set backupdir=~/tmp/backup/ " backups
+set directory=~/tmp/swap/   " swap files
+
+" Make those folders automatically if they don't already exist.
+if !isdirectory(expand(&undodir))
+  call mkdir(expand(&undodir), "p")
+endif
+if !isdirectory(expand(&backupdir))
+  call mkdir(expand(&backupdir), "p")
+endif
+if !isdirectory(expand(&directory))
+  call mkdir(expand(&directory), "p")
+endif
+
+set history=1000
+set undofile "we like the undo file"
+set undolevels=1000
+set undoreload=1000
+" swap dir
+augroup NoSimulataneousEdits
+  autocmd!
+  autocmd SwapExists * let v:swapchoice= 'o'
+  autocmd SwapExists * echomsg ErrorMsg
+  autocmd SwapExists * echo 'Duplicate edit session (readonly)'
+  autocmd SwapExists * echohl None
+augroup END
+
+
+
+"#######################
+" colorization
+"#######################
+syntax enable
+set ofu=syntaxcomplete#Complete
+syntax on
+set term=xterm-256color
+
+"set background=dark
+if has('gui_running')
+  set guioptions-=T  " no toolbar
+"  set background=dark
+  colorscheme pablo
+"  set guifont=Ubuntu\ Mono\ 13
+  hi Todo guifg=#40ffff guibg=#606060
+  set lines=50 columns=96 linespace=0
+else
+ " set background=dark " dark bg is nice, but guake transp. is nicer.
+  colorscheme goldenrod 
+  set lines=50 columns=96 linespace=0
+endif
+" required to enable the status line"
+set cmdheight=2
+set laststatus=2
+
+
+
+
+
+"#######################
+" custom aliases, universally shared
+" for convenience
+"#######################
+nnoremap <F1> :call MyCommands()<CR>
+nnoremap <F2> :!cd ~/.vim && bash ~/.vim/getSubmodules.sh<CR>
+nnoremap <F3> :PluginUpdate<CR>
+nnoremap <F4> :!make<CR>
+nnoremap <F5> :!./a.out && less<CR>
+nnoremap <F6> :set spelllang=en<CR>
+nnoremap <F7> :set nospell<CR>
+nnoremap <F8> :TagbarToggle<CR>
+nnoremap <F9> :NERDTreeToggle<CR>
+nnoremap <F11> :cd %:p:g<CR>
+nnoremap sss :%s/\s\+$//<CR>
+nnoremap rrr :source ~/.vimrc<CR>
+function! MyCommands()
+  echo 'F1 -> prints this'
+  echo 'F2 -> init step, get Vundle & other deps'
+  echo 'F3 -> execute vundle:PluginUpdate'
+  echo 'F4 -> !make - make sure a make file is present'
+  echo 'F5 -> !./a.out | less'
+  echo 'F6 -> set spellang=en - use z= to view correction list'
+  echo 'F7 -> set nospell'
+  echo 'F8 -> Tagbar'
+  echo 'F9 -> NERDTree'
+  echo 'F10 -> free to remap'
+  echo 'sss -> removes whitespaces from EOL'
+  echo 'rrr -> sources vimrc'
+endfunction
+
+
+"##############c########
+"vim-latex"
+"#######################
+let g:Imap_UsePlaceHolders = 0
+set backspace +=start
+
+
+
+
+"#######################
+"bracket completion"
+"#######################
+inoremap _( ()<Esc>:call BC_AddChar(")")<CR>i
+inoremap _{ {<CR>}<Esc>:call BC_AddChar("}")<CR><Esc>kA<CR>
+inoremap _[ []<Esc>:call BC_AddChar("]")<CR>i
+inoremap _" ""<Esc>:call BC_AddChar("\"")<CR>i
+inoremap _' ''<Esc>:call BC_AddChar("\'")<CR>i
+
+hi MatchParen cterm=bold ctermbg=none ctermfg=magenta
+
+
+" jump out of parenthesis, used with the above functions
+inoremap <C-j> <Esc>:call search(BC_GetChar(), "W")<CR>a
+
+function! BC_AddChar(schar)
+  if exists("b:robstack")
+    let b:robstack = b:robstack . a:schar
+  else
+    let b:robstack = a:schar
+  endif
+endfunction
+
+function! BC_GetChar()
+  let l:char = b:robstack[strlen(b:robstack)-1]
+  let b:robstack = strpart(b:robstack, 0, strlen(b:robstack)-1)
+  return l:char
+endfunction
+
+
+function! BC_jumpBackChar(num)
+  let l:char = b:robstack[strlen(b:robstack)-1]
+  let b:robstack = strpart(b:robstack, 0, strlen(b:robstack)-1)
+  return l:char
+endfunction
+
+
+"#######################
+" goto file. include all
+" project files.
+"#######################
+set path+=./**
+
+if has("multi_byte")
+  if &termencoding == ""
+    let &termencoding = &encoding
+  endif
+  set encoding=utf-8
+  setglobal fileencoding=utf-8
+  "setglobal bomb
+  set fileencodings=ucs-bom,utf-8,latin1
+endif
+
+
+"#######################
+"custom commands -
+"learn vimscript the hardway
+" "#######################
+
+
+"move line down
+nnoremap - ddp
+"move line up
+nnoremap _ ddkkp
+"create a recording map that works with qq
+"use qq to record, space to use the macro
+nnoremap rr @q
+"mapping gcc to gcc % -lm
+nnoremap ; :
+
+" statusline setup
+set laststatus=2
+set termencoding=utf-8
+set statusline=%t       "tail of the filename
+set statusline+=%y      "filetype
+set statusline+=[%{FileSize()}]
+set statusline+=[%{strlen(&fenc)?&fenc:'none'}, "file encoding
+set statusline+=%{&ff}] "file format
+set statusline+=%h      "help file flag
+set statusline+=%m      "modified flag
+set statusline+=%=      "left/right separator
+set statusline+=%#warningmsg#
+set statusline+=%*
+
+" Enable omni completion.
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+
+"#######################
+"EOF
+"#######################
