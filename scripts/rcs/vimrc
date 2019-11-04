@@ -25,6 +25,433 @@ Plugin 'kana/vim-smartinput'
 
 " colorschemes
 Plugin 'morhetz/gruvbox'
+Plugin 'kien/rainbow_parentheses.vim'
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => General
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" load plugins from vundle
+filetype off
+
+set rtp+=~/.vim/bundle/Vundle.vim
+
+call vundle#begin()
+" lest PluginClean deletes Vundle
+"
+Plugin 'VundleVim/Vundle.vim'
+
+" utilities
+"
+Plugin 'kien/ctrlp.vim' " fuzzy find files
+Plugin 'benmills/vimux'
+Plugin 'tpope/vim-fugitive' " the ultimate git helper
+Plugin 'tpope/vim-commentary' " comment/uncomment lines with gcc or gc in visual mode
+Plugin 'Shougo/neocomplete' " default basic auto complete and suggestions
+Plugin 'Shougo/neosnippet'
+Plugin 'Shougo/neosnippet-snippets'
+Plugin 'majutsushi/tagbar'
+Plugin 'scrooloose/nerdtree'
+Plugin 'kana/vim-smartinput'
+
+" colorschemes
+"
+Plugin 'morhetz/gruvbox'
+Plugin 'kien/rainbow_parentheses.vim'
+
+let g:rbpt_colorpairs = [
+    \ ['brown',       'RoyalBlue3'],
+    \ ['Darkblue',    'SeaGreen3'],
+    \ ['darkgray',    'DarkOrchid3'],
+    \ ['darkgreen',   'firebrick3'],
+    \ ['darkcyan',    'RoyalBlue3'],
+    \ ['darkred',     'SeaGreen3'],
+    \ ['darkmagenta', 'DarkOrchid3'],
+    \ ['brown',       'firebrick3'],
+    \ ['gray',        'RoyalBlue3'],
+    \ ['black',       'SeaGreen3'],
+    \ ['darkmagenta', 'DarkOrchid3'],
+    \ ['Darkblue',    'firebrick3'],
+    \ ['darkgreen',   'RoyalBlue3'],
+    \ ['darkcyan',    'SeaGreen3'],
+    \ ['darkred',     'DarkOrchid3'],
+    \ ['red',         'firebrick3'],
+    \ ]
+let g:rbpt_max = 16
+au VimEnter * RainbowParenthesesToggle
+au Syntax * RainbowParenthesesLoadRound
+au Syntax * RainbowParenthesesLoadSquare
+au Syntax * RainbowParenthesesLoadBraces
+au Syntax * RainbowParenthesesLoadChevrons
+
+" work plugins
+"
+Plugin 'jelera/vim-javascript-syntax'
+Plugin 'pangloss/vim-javascript'
+Plugin 'derekwyatt/vim-scala'
+Plugin 'kovetskiy/vim-bash'
+Plugin 'ktvoelker/sbt-vim'
+Plugin 'puppetlabs/puppet-syntax-vim'
+Plugin 'pearofducks/ansible-vim'
+Plugin 'vim-scripts/bash-support.vim'
+
+" completion setup
+"
+Plugin 'prabirshrestha/async.vim'
+Plugin 'prabirshrestha/vim-lsp'
+Plugin 'thomasfaingnaert/vim-lsp-neosnippet'
+
+call vundle#end()
+filetype plugin indent on
+
+
+set nocompatible " not compatible with vi
+set autoread " detect when a file is changed
+
+" make backspace behave in a sane manner
+set backspace=indent,eol,start
+
+" set a map leader for more key combos
+let mapleader = ','
+
+" Tab control
+set noexpandtab " tabs ftw
+set smarttab " tab respects 'tabstop', 'shiftwidth', and 'softtabstop'
+set tabstop=2 " the visible width of tabs
+set softtabstop=2 " edit as if the tabs are 4 characters wide
+set shiftwidth=2 " number of spaces to use for indent and unindent
+set shiftround " round indent to a multiple of 'shiftwidth'
+retab
+
+set clipboard=unnamed
+
+" faster redrawing
+set ttyfast
+
+" code folding settings
+set foldmethod=syntax " fold based on indent
+set foldnestmax=10 " deepest fold is 10 levels
+set nofoldenable " don't fold by default
+set foldlevel=1
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => User Interface
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Searching
+set ignorecase " case insensitive searching
+set smartcase " case-sensitive if expresson contains a capital letter
+set hlsearch
+set incsearch " set incremental search, like modern browsers
+set nolazyredraw " don't redraw while executing macros
+
+set magic " Set magic on, for regex
+
+set showmatch " show matching braces
+set mat=2 " how many tenths of a second to blink
+
+" switch syntax highlighting on
+syntax on
+
+set encoding=utf8
+let base16colorspace=256  " Access colors present in 256 colorspace"
+set t_Co=256 " Explicitly tell vim that the terminal supports 256 colors"
+set background=dark
+colorscheme gruvbox
+
+set number
+
+set autoindent " automatically set indent of new line
+set smartindent
+
+set laststatus=2 " show the satus line all the time
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Mappings
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+map <leader>ev :e! ~/.vimrc<cr> " edit ~/.vimrc
+
+map <leader>wc :wincmd q<cr>
+
+" moving up and down work as you would expect
+nnoremap <silent> j gj
+nnoremap <silent> k gk
+
+" helpers for dealing with other people's code
+nmap \t :set ts=4 sts=4 sw=4 noet<cr>
+nmap \s :set ts=4 sts=4 sw=4 et<cr>
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Functions
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+map <C-h> :call WinMove('h')<cr>
+map <C-j> :call WinMove('j')<cr>
+map <C-k> :call WinMove('k')<cr>
+map <C-l> :call WinMove('l')<cr>
+
+" Window movement shortcuts
+" move to the window in the direction shown, or create a new window
+function! WinMove(key)
+    let t:curwin = winnr()
+    exec "wincmd ".a:key
+    if (t:curwin == winnr())
+        if (match(a:key,'[jk]'))
+            wincmd v
+        else
+            wincmd s
+        endif
+        exec "wincmd ".a:key
+    endif
+endfunction
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Plugin settings
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" close NERDTree after a file is opened
+let g:NERDTreeQuitOnOpen=0
+" show hidden files in NERDTree
+let NERDTreeShowHidden=1
+" Toggle NERDTree
+nmap <silent> <leader>k :NERDTreeToggle<cr>
+" expand to the path of the file in the current buffer
+nmap <silent> <leader>y :NERDTreeFind<cr>
+
+" map fuzzyfinder (CtrlP) plugin
+" nmap <silent> <leader>t :CtrlP<cr>
+nmap <silent> <leader>r :CtrlPBuffer<cr>
+let g:ctrlp_map='<leader>t'
+let g:ctrlp_dotfiles=1
+let g:ctrlp_working_path_mode = 'ra'
+
+" CtrlP ignore patterns
+let g:ctrlp_custom_ignore = {
+            \ 'dir': '\.git$\|node_modules$\|\.hg$\|\.svn$',
+            \ 'file': '\.exe$\|\.so$'
+            \ }
+
+" search the nearest ancestor that contains .git, .hg, .svn
+let g:ctrlp_working_path_mode = 2
+
+
+"#######################
+"undo & backupdir
+"#######################
+
+let g:auto_save = 1
+set backup                        " enable backups
+set noswapfile
+
+set undodir=~/tmp/undo/     " undo files
+set backupdir=~/tmp/backup/ " backups
+set directory=~/tmp/swap/   " swap files
+
+" Make those folders automatically if they don't already exist.
+if !isdirectory(expand(&undodir))
+  call mkdir(expand(&undodir), "p")
+endif
+if !isdirectory(expand(&backupdir))
+  call mkdir(expand(&backupdir), "p")
+endif
+if !isdirectory(expand(&directory))
+  call mkdir(expand(&directory), "p")
+endif
+
+set history=10000
+set undofile "we like the undo file"
+set undolevels=10000
+set undoreload=10000
+" swap dir
+augroup NoSimulataneousEdits
+  autocmd!
+  autocmd SwapExists * let v:swapchoice= 'o'
+  autocmd SwapExists * echomsg ErrorMsg
+  autocmd SwapExists * echo 'Duplicate edit session (readonly)'
+  autocmd SwapExists * echohl None
+augroup END
+
+
+
+"#######################
+" custom aliases, universally shared
+" for convenience
+"#######################
+nnoremap <F1> :call MyCommands()<CR>
+nnoremap <F2> :PluginInstall<CR>
+nnoremap <F3> :PluginUpdate<CR>
+nnoremap <F4> :PluginClean<CR>
+nnoremap <F5> :set spelllang=de<CR>
+nnoremap <F6> :set spelllang=en<CR>
+nnoremap <F7> :set nospell<CR>
+nnoremap <F8> :TagbarToggle<CR>
+nnoremap <F9> :NERDTreeToggle<CR>
+nnoremap sss :%s/\s\+$//<CR>
+nnoremap rrr :source ~/.vimrc<CR>
+function! MyCommands()
+
+
+echo '<F1> :call MyCommands()<CR>'
+echo '<F2> :PluginInstall<CR>'
+echo '<F3> :PluginUpdate<CR>'
+echo '<F4> :PluginClean<CR>'
+echo '<F5> :set spelllang=de<CR>'
+echo '<F6> :set spelllang=en<CR>'
+echo '<F7> :set nospell<CR>'
+echo '<F8> :TagbarToggle<CR>'
+echo '<F9> :NERDTreeToggle<CR>'
+echo 'sss :%s/\s\+$//<CR>'
+echo 'rrr :source ~/.vimrc<CR>'
+
+endfunction
+
+
+"""#######################
+"""bracket completion"
+"""#######################
+""inoremap _( ()<Esc>:call BC_AddChar(")")<CR>i
+""inoremap _{ {<CR>}<Esc>:call BC_AddChar("}")<CR><Esc>kA<CR>
+""inoremap _[ []<Esc>:call BC_AddChar("]")<CR>i
+""inoremap _" ""<Esc>:call BC_AddChar("\"")<CR>i
+""inoremap _' ''<Esc>:call BC_AddChar("\'")<CR>i
+""
+""
+""" jump out of parenthesis, used with the above functions
+""inoremap <C-j> <Esc>:call search(BC_GetChar(), "W")<CR>a
+""
+""function! BC_AddChar(schar)
+""  if exists("b:robstack")
+""    let b:robstack = b:robstack . a:schar
+""  else
+""    let b:robstack = a:schar
+""  endif
+""endfunction
+""
+""function! BC_GetChar()
+""  let l:char = b:robstack[strlen(b:robstack)-1]
+""  let b:robstack = strpart(b:robstack, 0, strlen(b:robstack)-1)
+""  return l:char
+""endfunction
+""
+""
+""function! BC_jumpBackChar(num)
+""  let l:char = b:robstack[strlen(b:robstack)-1]
+""  let b:robstack = strpart(b:robstack, 0, strlen(b:robstack)-1)
+""  return l:char
+""endfunction
+""
+""
+" Enable omni completion.
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+autocmd FileType scala setlocal omnifunc=scalacomplete#CompleteScala
+
+" neocomplete  https://kimikimi714.hatenablog.com/entry/2015/06/05/180000
+let g:neocomplete#enable_at_startup = 1
+" Use smartcase.
+let g:neocomplete#enable_smart_case = 1
+ " Use underbar completion.
+let g:neocomplete#enable_underbar_completion = 1
+" ユーザ定義の辞書を指定
+let g:neocomplete#sources#dictionary#dictionaries = {
+  \ 'default' : '',
+  \ 'scala' : $HOME . '/.vim/dict/scala.dict',
+  \ }
+" Plugin key-mappings.
+inoremap <expr><C-g>     neocomplete#undo_completion()
+inoremap <expr><C-l>     neocomplete#complete_common_string()
+
+" Recommended key-mappings.
+" <CR>: close popup and save indent.
+inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+function! s:my_cr_function()
+  return neocomplete#close_popup() . "\<CR>"
+endfunction
+" <TAB>: completion.
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+" <C-h>, <BS>: close popup and delete backword char.
+inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+inoremap <expr><C-y>  neocomplete#close_popup()
+inoremap <expr><C-e>  neocomplete#cancel_popup()
+
+
+" custom status line
+"#adding reccomended syntastic settings
+" statusline setup
+set laststatus=2
+set termencoding=utf-8
+set statusline=%t       "tail of the filename
+set statusline+=%y      "filetype
+set statusline+=[%{FileSize()}]
+set statusline+=[%{strlen(&fenc)?&fenc:'none'}, "file encoding
+set statusline+=%{&ff}] "file format
+set statusline+=%h      "help file flag
+set statusline+=%m      "modified flag
+set statusline+=%r      "read only flag
+set statusline+=%=      "left/right separator
+set statusline+=%c,     "cursor column
+set statusline+=%l/%L   "cursor line/total lines
+set statusline+=\ %P    "percent through file
+function! FileSize()
+    let bytes = getfsize(expand("%:p"))
+    if bytes <= 0
+        return ""
+    endif
+    if bytes < 1024
+        return bytes
+    else
+        return (bytes / 1024) . "K"
+    endif
+endfunction
+
+
+"#######################
+"that awesome looking trail
+"takes care of whitespaces
+"#######################
+set list
+set listchars=""
+"set listchars+=eol:e
+set listchars+=tab:»·
+set listchars+=trail:·
+set listchars+=extends:>
+"set listchars+=precedes:<
+set listchars+=nbsp:·
+
+
+" ansible
+au BufRead,BufNewFile */playbooks/*.yml set filetype=yaml.ansible
+au BufRead,BufNewFile */playbooks/*.inv set filetype=yaml.ansible
+au BufRead,BufNewFile */playbooks/*/*.yml set filetype=yaml.ansible
+au BufRead,BufNewFile */playbooks/*/*.inv set filetype=yaml.ansible
+let g:rbpt_colorpairs = [
+    \ ['brown',       'RoyalBlue3'],
+    \ ['Darkblue',    'SeaGreen3'],
+    \ ['darkgray',    'DarkOrchid3'],
+    \ ['darkgreen',   'firebrick3'],
+    \ ['darkcyan',    'RoyalBlue3'],
+    \ ['darkred',     'SeaGreen3'],
+    \ ['darkmagenta', 'DarkOrchid3'],
+    \ ['brown',       'firebrick3'],
+    \ ['gray',        'RoyalBlue3'],
+    \ ['black',       'SeaGreen3'],
+    \ ['darkmagenta', 'DarkOrchid3'],
+    \ ['Darkblue',    'firebrick3'],
+    \ ['darkgreen',   'RoyalBlue3'],
+    \ ['darkcyan',    'SeaGreen3'],
+    \ ['darkred',     'DarkOrchid3'],
+    \ ['red',         'firebrick3'],
+    \ ]
+let g:rbpt_max = 16
+au VimEnter * RainbowParenthesesToggle
+au Syntax * RainbowParenthesesLoadRound
+au Syntax * RainbowParenthesesLoadSquare
+au Syntax * RainbowParenthesesLoadBraces
 
 " work plugins
 "
