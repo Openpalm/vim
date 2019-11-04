@@ -24,20 +24,23 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'kana/vim-smartinput'
 
 " colorschemes
-Plugin 'chriskempson/base16-vim'
 Plugin 'morhetz/gruvbox'
 
 " work plugins
 "
-Plugin 'pangloss/vim-javascript'
 Plugin 'jelera/vim-javascript-syntax'
+Plugin 'pangloss/vim-javascript'
 Plugin 'derekwyatt/vim-scala'
+Plugin 'kovetskiy/vim-bash'
 Plugin 'ktvoelker/sbt-vim'
 Plugin 'puppetlabs/puppet-syntax-vim'
 Plugin 'pearofducks/ansible-vim'
 Plugin 'vim-scripts/bash-support.vim'
-Plugin 'kovetskiy/vim-bash'
 
+" completion setup
+Plugin 'prabirshrestha/async.vim'
+Plugin 'prabirshrestha/vim-lsp'
+Plugin 'thomasfaingnaert/vim-lsp-neosnippet'
 
 call vundle#end()
 filetype plugin indent on
