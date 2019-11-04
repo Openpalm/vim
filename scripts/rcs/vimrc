@@ -27,11 +27,17 @@ Plugin 'kana/vim-smartinput'
 Plugin 'chriskempson/base16-vim'
 Plugin 'morhetz/gruvbox'
 
-" JavaScript plugins
+" work plugins
 "
 Plugin 'pangloss/vim-javascript'
 Plugin 'jelera/vim-javascript-syntax'
 Plugin 'derekwyatt/vim-scala'
+Plugin 'ktvoelker/sbt-vim'
+Plugin 'puppetlabs/puppet-syntax-vim'
+Plugin 'pearofducks/ansible-vim'
+Plugin 'vim-scripts/bash-support.vim'
+Plugin 'kovetskiy/vim-bash'
+
 
 call vundle#end()
 filetype plugin indent on
@@ -354,3 +360,10 @@ set listchars+=trail:·
 set listchars+=extends:>
 "set listchars+=precedes:<
 set listchars+=nbsp:·
+
+
+" ansible
+au BufRead,BufNewFile */playbooks/*.yml set filetype=yaml.ansible
+au BufRead,BufNewFile */playbooks/*.inv set filetype=yaml.ansible
+au BufRead,BufNewFile */playbooks/*/*.yml set filetype=yaml.ansible
+au BufRead,BufNewFile */playbooks/*/*.inv set filetype=yaml.ansible
