@@ -26,7 +26,13 @@ Plugin 'majutsushi/tagbar'
 Plugin 'scrooloose/nerdtree'
 Plugin 'kana/vim-smartinput'
 Plugin 'soramugi/auto-ctags.vim'
+"requires ctags be installed.(!)
 
+
+Plugin 'terryma/vim-multiple-cursors'
+" simple usage: ctrl-n to select mulitple variable under cursor
+" each ctrl-n adds a cursor/selection, c<word> to replace.
+" great for local edits.
 
 " colorschemes
 Plugin 'morhetz/gruvbox'
