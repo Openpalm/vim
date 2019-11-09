@@ -15,6 +15,9 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'kien/ctrlp.vim' " fuzzy find files
 Plugin 'benmills/vimux'
 Plugin 'tpope/vim-fugitive' " the ultimate git helper
+Plugin 'airblade/vim-gitgutter'
+Plugin 'zivyangll/git-blame.vim'
+noremap <leader>s :<c-u>call gitblame#echo()<cr>
 Plugin 'tpope/vim-commentary' " comment/uncomment lines with gcc or gc in visual mode
 Plugin 'Shougo/neocomplete' " default basic auto complete and suggestions
 Plugin 'Shougo/neosnippet'
@@ -22,6 +25,8 @@ Plugin 'Shougo/neosnippet-snippets'
 Plugin 'majutsushi/tagbar'
 Plugin 'scrooloose/nerdtree'
 Plugin 'kana/vim-smartinput'
+Plugin 'soramugi/auto-ctags.vim'
+
 
 " colorschemes
 Plugin 'morhetz/gruvbox'
@@ -159,11 +164,11 @@ let NERDTreeShowHidden=1
 nmap <silent> <leader>k :NERDTreeToggle<cr>
 " expand to the path of the file in the current buffer
 nmap <silent> <leader>y :NERDTreeFind<cr>
-
 " map fuzzyfinder (CtrlP) plugin
-" nmap <silent> <leader>t :CtrlP<cr>
+nmap <silent> <leader>t :CtrlP<cr>
 nmap <silent> <leader>r :CtrlPBuffer<cr>
-let g:ctrlp_map='<leader>t'
+
+let g:ctrlp_map='<lnneader>t'
 let g:ctrlp_dotfiles=1
 let g:ctrlp_working_path_mode = 'ra'
 
@@ -220,9 +225,6 @@ augroup END
 " for convenience
 "#######################
 nnoremap <F1> :call MyCommands()<CR>
-nnoremap <F2> :PluginInstall<CR>
-nnoremap <F3> :PluginUpdate<CR>
-nnoremap <F4> :PluginClean<CR>
 nnoremap <F5> :set spelllang=de<CR>
 nnoremap <F6> :set spelllang=en<CR>
 nnoremap <F7> :set nospell<CR>
@@ -230,59 +232,10 @@ nnoremap <F8> :TagbarToggle<CR>
 nnoremap <F9> :NERDTreeToggle<CR>
 nnoremap sss :%s/\s\+$//<CR>
 nnoremap rrr :source ~/.vimrc<CR>
-function! MyCommands()
+nnoremap www :wa!<CR>
+nnoremap ppp :PluginInstal<CR>
 
 
-echo '<F1> :call MyCommands()<CR>'
-echo '<F2> :PluginInstall<CR>'
-echo '<F3> :PluginUpdate<CR>'
-echo '<F4> :PluginClean<CR>'
-echo '<F5> :set spelllang=de<CR>'
-echo '<F6> :set spelllang=en<CR>'
-echo '<F7> :set nospell<CR>'
-echo '<F8> :TagbarToggle<CR>'
-echo '<F9> :NERDTreeToggle<CR>'
-echo 'sss :%s/\s\+$//<CR>'
-echo 'rrr :source ~/.vimrc<CR>'
-
-endfunction
-
-
-"""#######################
-"""bracket completion"
-"""#######################
-""inoremap _( ()<Esc>:call BC_AddChar(")")<CR>i
-""inoremap _{ {<CR>}<Esc>:call BC_AddChar("}")<CR><Esc>kA<CR>
-""inoremap _[ []<Esc>:call BC_AddChar("]")<CR>i
-""inoremap _" ""<Esc>:call BC_AddChar("\"")<CR>i
-""inoremap _' ''<Esc>:call BC_AddChar("\'")<CR>i
-""
-""
-""" jump out of parenthesis, used with the above functions
-""inoremap <C-j> <Esc>:call search(BC_GetChar(), "W")<CR>a
-""
-""function! BC_AddChar(schar)
-""  if exists("b:robstack")
-""    let b:robstack = b:robstack . a:schar
-""  else
-""    let b:robstack = a:schar
-""  endif
-""endfunction
-""
-""function! BC_GetChar()
-""  let l:char = b:robstack[strlen(b:robstack)-1]
-""  let b:robstack = strpart(b:robstack, 0, strlen(b:robstack)-1)
-""  return l:char
-""endfunction
-""
-""
-""function! BC_jumpBackChar(num)
-""  let l:char = b:robstack[strlen(b:robstack)-1]
-""  let b:robstack = strpart(b:robstack, 0, strlen(b:robstack)-1)
-""  return l:char
-""endfunction
-""
-""
 " Enable omni completion.
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
