@@ -1,5 +1,0 @@
-install libboost-all-dev
-install libclang-dev
-
-run: ./install.sh --clang-completer --system-libclang --system-boost
-
