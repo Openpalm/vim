@@ -25,9 +25,14 @@ Plugin 'Shougo/neosnippet-snippets'
 Plugin 'majutsushi/tagbar'
 Plugin 'scrooloose/nerdtree'
 Plugin 'kana/vim-smartinput'
-Plugin 'soramugi/auto-ctags.vim'
-"requires ctags be installed.(!)
 
+Plugin 'soramugi/auto-ctags.vim'
+let g:auto_ctags = 1
+"requires ctags be installed.(!)
+"//add shortcut here.
+
+Plugin 'luochen1990/rainbow'
+let g:rainbow_active = 1
 
 Plugin 'terryma/vim-multiple-cursors'
 " simple usage: ctrl-n to select mulitple variable under cursor
@@ -73,7 +78,7 @@ set tabstop=2 " the visible width of tabs
 set softtabstop=2 " edit as if the tabs are 4 characters wide
 set shiftwidth=2 " number of spaces to use for indent and unindent
 set shiftround " round indent to a multiple of 'shiftwidth'
-retab
+%retab
 
 set clipboard=unnamed
 
@@ -111,7 +116,6 @@ set t_Co=256 " Explicitly tell vim that the terminal supports 256 colors"
 set background=dark
 colorscheme gruvbox
 
-set number
 
 set autoindent " automatically set indent of new line
 set smartindent
@@ -173,6 +177,9 @@ nmap <silent> <leader>y :NERDTreeFind<cr>
 " map fuzzyfinder (CtrlP) plugin
 nmap <silent> <leader>t :CtrlP<cr>
 nmap <silent> <leader>r :CtrlPBuffer<cr>
+nmap <silent> <leader>w :wa!<CR> 
+nmap <silent> <leader>p :PluginInstal<CR> 
+nmap <silent> <leader>q :q<CR> 
 
 let g:ctrlp_map='<lnneader>t'
 let g:ctrlp_dotfiles=1
@@ -224,8 +231,6 @@ augroup NoSimulataneousEdits
   autocmd SwapExists * echohl None
 augroup END
 
-
-
 "#######################
 " custom aliases, universally shared
 " for convenience
@@ -238,10 +243,6 @@ nnoremap <F8> :TagbarToggle<CR>
 nnoremap <F9> :NERDTreeToggle<CR>
 nnoremap sss :%s/\s\+$//<CR>
 nnoremap rrr :source ~/.vimrc<CR>
-nnoremap www :wa!<CR>
-nnoremap ppp :PluginInstal<CR>
-
-
 " Enable omni completion.
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
@@ -320,12 +321,25 @@ set listchars=""
 set listchars+=tab:»·
 set listchars+=trail:·
 set listchars+=extends:>
-"set listchars+=precedes:<
+set listchars+=precedes:<
 set listchars+=nbsp:·
-
 
 " ansible
 au BufRead,BufNewFile */playbooks/*.yml set filetype=yaml.ansible
 au BufRead,BufNewFile */playbooks/*.inv set filetype=yaml.ansible
 au BufRead,BufNewFile */playbooks/*/*.yml set filetype=yaml.ansible
 au BufRead,BufNewFile */playbooks/*/*.inv set filetype=yaml.ansible
+
+"ruler 
+set number
+set relativenumber
+
+" set the 80c vline
+set colorcolumn=80
+highlight ColorColumn ctermbg=235 guibg=#2c2d27
+
+"performanc
+set nolazyredraw " don't redraw while executing macros
+
+"extras
+set spellsuggest=best

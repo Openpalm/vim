@@ -10,9 +10,6 @@ How to install:
 
 stuff you'll need:
 
-* - Tagbar needs exuberant-ctags
-* - Best used with the screenrc under scripts/rcs/screenrc (or your fav tmux for the youngens, i have an old unix soul)
+* - Tagbar and ctags need ctags
 
 Enjoy!
-
-This repo is work in progress.
