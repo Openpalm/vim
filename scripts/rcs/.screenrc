@@ -1,0 +1,21 @@
+#screen size is 27"
+#
+mousetrack on
+
+split
+split -v
+split -v
+focus
+focus
+focus
+split -v
+focus
+split
+focus
+focus
+resize -v -10
+
+focus #2nd pane
+focus #3rd pane
+focus #4th, bingo.
+resize +44
