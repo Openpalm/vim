@@ -1,0 +1,199 @@
+case $- in
+    *i*) ;;
+      *) return;;
+esac
+
+HISTCONTROL=ignoreboth
+shopt -s histappend
+
+HISTSIZE=10000
+HISTFILESIZE=20000
+
+[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+
+case "$TERM" in
+    xterm)
+        color_prompt=yes
+        ;;
+    screen)
+        color_prompt=yes
+        ;;
+    *256*)
+        color_prompt=yes
+        ;;
+esac
+force_color_prompt=yes
+
+if [ -n "$force_color_prompt" ]; then
+    if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
+	color_prompt=yes
+    else
+	color_prompt=
+    fi
+fi
+
+if [ "$color_prompt" = yes ]; then
+    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+else
+    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+fi
+unset color_prompt force_color_prompt
+
+# If this is an xterm set the title to user@host:dir
+case "$TERM" in
+xterm*|rxvt*)
+    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
+    ;;
+*)
+    ;;
+esac
+
+# enable color support of ls and also add handy aliases
+if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    alias ls='ls --color=auto'
+    #alias dir='dir --color=auto'
+    #alias vdir='vdir --color=auto'
+
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
+fi
+
+# colored GCC warnings and errors
+#export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+
+# some more ls aliases
+alias ll='ls -alFG'
+alias la='ls -AG'
+alias l='ls -CFG'
+
+# Add an "alert" alias for long running commands.  Use like so:
+#   sleep 10; alert
+alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+
+# Alias definitions.
+# You may want to put all your additions into a separate file like
+# ~/.bash_aliases, instead of adding them here directly.
+# See /usr/share/doc/bash-doc/examples in the bash-doc package.
+
+if [ -f ~/.bash_aliases ]; then
+    . ~/.bash_aliases
+fi
+
+# enable programmable completion features (you don't need to enable
+# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
+# sources /etc/bash.bashrc).
+if ! shopt -oq posix; then
+  if [ -f /usr/share/bash-completion/bash_completion ]; then
+    . /usr/share/bash-completion/bash_completion
+  elif [ -f /etc/bash_completion ]; then
+    . /etc/bash_completion
+  fi
+fi
+
+
+
+alias nukescreen="killall screen"
+alias nukejava="killall java"
+#careful now.
+alias nukemem="echo 'sync; echo 3 > /proc/sys/vm/drop_caches'"
+
+alias ccc="cat ~/.bashrc"
+alias rrr="source ~/.bashrc"
+alias eee="vim ~/.bashrc"
+alias gensshkey_strong="ssh-keygen -b 4096 -f id_rsa4096_`date +%s` -C $USER@localhost -o -a 500"
+alias gensshkey_weak="ssh-keygen -b 2048 -f id_rsa2048_`date +%s` -C $USER@localhost -o -a 500"
+alias gensshkey_extraweak="ssh-keygen -b 1024 -f id_rsa1024_`date +%s` -C $USER@localhost -o -a 500"
+
+sysinfo () {
+    #system information summary
+    echo `hostname` RUNNING `cat /etc/issue.net | head -n 1`
+    df -h
+    if [[ $EUID == 0 ]]; then
+        du -sh /home | sort -n -r | head -n 5
+        du -sh /var | sort -n -r | head -n 5
+        du -sh /var/log | sort -n -r | head -n 5
+        du -sh /var/www | sort -n | head -n 5
+        du -sh /srv | sort -n | head -n 5
+    fi
+    ps -eo pcpu,pid | sort -k 1 -r | head -5
+    egrep --color 'Mem' /proc/meminfo
+    #egrep --color 'Cache' /proc/meminfo
+    echo "disable this output in $0 rc file if you wish"
+
+}
+
+############
+#
+# Testing
+#
+############
+
+############
+#
+# ENV EXTRA
+#
+############
+
+#export PYENV_ROOT="$HOME/.pyenv"
+#export PATH="$PYENV_ROOT/bin:$HOME/bin:$HOME/.local/bin:$PATH"
+#export TERM=xterm-color
+
+if [ ! -f ~/.fzf.bash ]
+then
+    dpkg -l | grep -qw fzf || git clone https://github.com/junegunn/fzf && cd fzf && ./install
+fi
+
+function fstr {
+    var=\'$@\'
+    grep -rnw --exclude-dir\={target,project} $var
+}
+
+df -h
+
+set -o vi
+
+
+
+cd () { builtin cd "$@" && chpwd; }
+pushd () { builtin pushd "$@" && chpwd; }
+popd () { builtin popd "$@" && chpwd; }
+chpwd () {
+  case $PWD in
+    $HOME) HPWD="~";;
+    $HOME/*/*) HPWD="${PWD#"${PWD%/*/*}/"}";;
+    $HOME/*) HPWD="~/${PWD##*/}";;
+    /*/*/*) HPWD="${PWD#"${PWD%/*/*}/"}";;
+    *) HPWD="$PWD";;
+  esac
+}
+#PS1='$HPWD \$'
+#PS1="${PWD#"${PWD%/*/*}/"}">${GREEN}\u@\h${OFF}"
+
+
+#`export PS1="$(basename $(dirname $PWD))/$(basename $PWD)"`
+#`export PS1="$($(basename $PWD)"`
+
+
+#[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+eval $(minikube docker-env)
+
+export CLICOLOR=1
+
+macnst (){
+    netstat -Watnlv | grep LISTEN | awk '{"ps -o comm= -p " $9 | getline procname;colred="\033[01;31m";colclr="\033[0m"; print colred "proto: " colclr $1 colred " | addr.port: " colclr $4 colred " | pid: " colclr $9 colred " | name: " colclr procname;  }' | column -t -s "|"
+}
+
+
+
+export GOPATH=$HOME/go-workspace # don't forget to change your path correctly!
+export GOROOT=/usr/local/opt/go/libexec
+export PATH=$PATH:$GOPATH/bin
+export PATH=$PATH:$GOROOT/bin
+addGoPath () {
+  export GOPATH=$GOPATH:$PWD
+}
+mkdir -p $GOPATH $GOPATH/src $GOPATH/pkg $GOPATH/bin
