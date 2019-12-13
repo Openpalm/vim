@@ -22,6 +22,30 @@ Plugin 'tpope/vim-commentary' " comment/uncomment lines with gcc or gc in visual
 Plugin 'Shougo/neocomplete' " default basic auto complete and suggestions
 Plugin 'Shougo/neosnippet'
 Plugin 'Shougo/neosnippet-snippets'
+" Plugin key-mappings.
+" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+xmap <C-k>     <Plug>(neosnippet_expand_target)
+
+" SuperTab like snippets behavior.
+" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+"imap <expr><TAB>
+" \ pumvisible() ? "\<C-n>" :
+" \ neosnippet#expandable_or_jumpable() ?
+" \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+\ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+
+" For conceal markers.
+if has('conceal')
+  set conceallevel=2 concealcursor=niv
+endif
+
+" Tell Neosnippet about the other snippets
+let g:neosnippet#snippets_directory='~/.vim/bundle/vim-snippets/snippets'
+
+
 Plugin 'majutsushi/tagbar'
 Plugin 'scrooloose/nerdtree'
 Plugin 'kana/vim-smartinput'
@@ -33,6 +57,14 @@ let g:auto_ctags = 1
 
 Plugin 'luochen1990/rainbow'
 let g:rainbow_active = 1
+let g:rainbow_conf = {
+\	'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
+\	'ctermfgs': ['lightblue', 'lightyellow', 'lightcyan', 'lightmagenta'],
+\	'guis': [''],
+\	'cterms': [''],
+\	'operators': '_,_',
+\	'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
+\}
 
 Plugin 'terryma/vim-multiple-cursors'
 " simple usage: ctrl-n to select mulitple variable under cursor
@@ -47,6 +79,7 @@ Plugin 'morhetz/gruvbox'
 Plugin 'jelera/vim-javascript-syntax'
 Plugin 'pangloss/vim-javascript'
 Plugin 'derekwyatt/vim-scala'
+
 Plugin 'kovetskiy/vim-bash'
 Plugin 'ktvoelker/sbt-vim'
 Plugin 'puppetlabs/puppet-syntax-vim'
@@ -56,8 +89,26 @@ Plugin 'vim-scripts/bash-support.vim'
 " completion setup
 Plugin 'prabirshrestha/async.vim'
 Plugin 'prabirshrestha/vim-lsp'
-Plugin 'thomasfaingnaert/vim-lsp-neosnippet'
+if executable('metals-vim')
+   au User lsp_setup call lsp#register_server({
+      \ 'name': 'metals',
+      \ 'cmd': {server_info->['metals-vim']},
+      \ 'initialization_options': { 'rootPatterns': 'build.sbt' },
+      \ 'whitelist': [ 'scala', 'sbt' ],
+      \ })
+endif
+au BufRead,BufNewFile *.sbt set filetype=scala
+au BufRead,BufNewFile *.scala set filetype=scala
+highlight link LspErrorText GruvboxRedSign " requires gruvbox
+highlight clear LspWarningLine"
 
+let g:lsp_signs_enabled = 1         " enable signs
+let g:lsp_diagnostics_echo_cursor = 1 " enable echo under cursor when in normal mode
+let g:lsp_signs_error = {'text': '✗'}
+let g:lsp_signs_warning = {'text': '‼'} 
+let g:lsp_signs_hint = {'text': '!'} 
+
+Plugin 'thomasfaingnaert/vim-lsp-neosnippet'
 call vundle#end()
 filetype plugin indent on
 
@@ -72,7 +123,7 @@ set backspace=indent,eol,start
 let mapleader = ','
 
 " Tab control
-set noexpandtab " tabs ftw
+set expandtab
 set smarttab " tab respects 'tabstop', 'shiftwidth', and 'softtabstop'
 set tabstop=2 " the visible width of tabs
 set softtabstop=2 " edit as if the tabs are 4 characters wide
@@ -177,6 +228,8 @@ nmap <silent> <leader>y :NERDTreeFind<cr>
 " map fuzzyfinder (CtrlP) plugin
 nmap <silent> <leader>t :CtrlP<cr>
 nmap <silent> <leader>r :CtrlPBuffer<cr>
+nmap <silent> <leader>i :TagbarToggle<CR>
+nmap <silent> <leader>e :source ~/.vimrc<CR>
 nmap <silent> <leader>w :wa!<CR> 
 nmap <silent> <leader>p :PluginInstal<CR> 
 nmap <silent> <leader>q :q<CR> 
@@ -343,3 +396,5 @@ set nolazyredraw " don't redraw while executing macros
 
 "extras
 set spellsuggest=best
+
+
