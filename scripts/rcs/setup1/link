@@ -1,0 +1,3 @@
+ln -s ~/.vim/scripts/rcs/vimrc ~/.vimrc
+ln -s ~/.vim/scripts/rcs/.jslintrc ~/.jslintrc
+ln -s ~/.vim/scripts/rcs/.jshintrc ~/.jshintrc
