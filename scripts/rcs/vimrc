@@ -28,6 +28,8 @@ Plugin 'neoclide/coc.nvim', {'branch': 'release'}
 Plugin 'stephpy/vim-php-cs-fixer'
 Plugin 'arnaud-lb/vim-php-namespace'
 Plugin 'kien/ctrlp.vim'
+Plugin 'christoomey/vim-tmux-navigator'
+
 "coc debug
 "cd ~/.vim/bundle/coc.nvim/ && git reset head --hard
 "open vim && :PluginUpdate
