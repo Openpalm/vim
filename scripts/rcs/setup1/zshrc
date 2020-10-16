@@ -109,4 +109,8 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+export TERM=screen-256color-bce
+export $PATH = '/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/basselkhatib/bin:/Users/basselkhatib/.composer/vendor/bin' .':'. $PATH
+
+
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

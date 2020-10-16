@@ -29,9 +29,10 @@ Plugin 'stephpy/vim-php-cs-fixer'
 Plugin 'arnaud-lb/vim-php-namespace'
 Plugin 'kien/ctrlp.vim'
 Plugin 'christoomey/vim-tmux-navigator'
+Plugin 'vim-airline/vim-airline'
 
 "coc debug
-"cd ~/.vim/bundle/coc.nvim/ && git reset head --hard
+"cd ~/.v"m/bundle/coc.nvim/ && git reset head --hard
 "open vim && :PluginUpdate
 "run call coc#util#install()
 call vundle#end()

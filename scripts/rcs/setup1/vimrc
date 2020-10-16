@@ -177,7 +177,7 @@ nnoremap sss :%s/\s\+$//<CR>
 nnoremap rrr :source ~/.vimrc<CR>
 nnoremap <c-a> :NERDTreeToggle<CR>
 nnoremap <c-q> :q!<CR>
-nnoremap <c-w> :w!<CR>
+nnoremap <c-s> :w!<CR>
 nnoremap <c-z> :PluginInstall<CR>
 nnoremap <c-x> :PluginClean!<CR>
 
