@@ -5,7 +5,6 @@ set termencoding=utf-8
 filetype indent plugin on
 syntax enable
 
-
 "#######################
 " vundles and their configs
 "#######################
@@ -24,14 +23,56 @@ Plugin 'shawncplus/phpcomplete.vim'
 Plugin 'msjyoo/vim-autocomplpop-php'
 Plugin 'sheerun/vim-polyglot'
 Plugin 'dense-analysis/ale'
+Plugin 'othree/xml.vim'
 Plugin 'neoclide/coc.nvim', {'branch': 'release'}
+Plugin 'stephpy/vim-php-cs-fixer'
+Plugin 'arnaud-lb/vim-php-namespace'
+Plugin 'kien/ctrlp.vim'
 "coc debug
 "cd ~/.vim/bundle/coc.nvim/ && git reset head --hard
 "open vim && :PluginUpdate
 "run call coc#util#install()
-
 call vundle#end()
 
+"ctrlp
+let g:ctrlp_map = '<c-p>'
+let g:ctrlp_cmd = 'CtrlP'
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
+set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe  " Windows
+
+let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/]\.(git|hg|svn)$',
+  \ 'file': '\v\.(exe|so|dll)$',
+  \ 'link': 'some_bad_symbolic_links',
+  \ }
+"ctags
+au BufWritePost *.php silent! ! ctags -R --PHP-kinds=cfi --regex-php="/^[ \t]*trait[ \t]+([a-z0_9_]+)/\1/t,traits/i" &
+au BufWritePost *.js silent! ! sh -c 'find . -type f -iregex ".*\.js$" -not -path "./node_modules/*" -exec jsctags {} -f \; | sed '/^$/d' | LANG=C sort > ~/.tags' &
+set tags+=tags,tags.vendors
+"php namespaces
+function! IPhpInsertUse()
+    call PhpInsertUse()
+    call feedkeys('a',  'n')
+endfunction
+autocmd FileType php inoremap <Leader>u <Esc>:call IPhpInsertUse()<CR>
+autocmd FileType php noremap <Leader>u :call PhpInsertUse()<CR>
+function! IPhpExpandClass()
+    call PhpExpandClass()
+    call feedkeys('a', 'n')
+endfunction
+autocmd FileType php inoremap <Leader>e <Esc>:call IPhpExpandClass()<CR>
+autocmd FileType php noremap <Leader>e :call PhpExpandClass()<CR>
+autocmd FileType php inoremap <Leader>s <Esc>:call PhpSortUse()<CR>
+autocmd FileType php noremap <Leader>s :call PhpSortUse()<CR>
+let g:php_namespace_sort_after_insert = 1
+
+"php cs fixer
+let g:php_cs_fixer_php_path = "php"               " Path to PHP
+let g:php_cs_fixer_enable_default_mapping = 1     " Enable the mapping by default (<leader>pcd)
+let g:php_cs_fixer_dry_run = 0                    " Call command with dry-run option
+let g:php_cs_fixer_verbose = 0                    " Return the output of command if 1, else an inline information.
+autocmd BufWritePost *.php silent! call PhpCsFixerFixFile()
 "ale
 let g:ale_sign_error = '❌'
 let g:ale_sign_warning = '⚠️'
@@ -153,7 +194,7 @@ nnoremap <silent> <RIGHT> :vertical resize -2<CR>
 "#######################
 
 if has("gui_running")
-  set guifont=Monaco:h13
+  set guifont=Monaco:h18
   set guifontwide=Hiragino\ Sans\ GB
   set linespace=2
   set background=dark
