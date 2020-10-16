@@ -110,7 +110,18 @@ source $ZSH/oh-my-zsh.sh
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 export TERM=screen-256color-bce
-export $PATH = '/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/basselkhatib/bin:/Users/basselkhatib/.composer/vendor/bin' .':'. $PATH
+export PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/basselkhatib/bin:/Users/basselkhatib/.composer/vendor/bin:$PATH
+export LANG=en_US.UTF-8
+# LANGUAGE="en_US:en"
+# LC_NUMERIC="en_US.UTF-8"
+# LC_TIME="en_US.UTF-8"
+# LC_MONETARY="en_US.UTF-8"
+# LC_PAPER="en_US.UTF-8"
+# LC_IDENTIFICATION="en_US.UTF-8"
+# LC_NAME="en_US.UTF-8"
+# LC_ADDRESS="en_US.UTF-8"
+# LC_TELEPHONE="en_US.UTF-8"
+# LC_MEASUREMENT="en_US.UTF-8"
 
 
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
