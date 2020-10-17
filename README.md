@@ -15,7 +15,7 @@ stuff you'll need:
 * fzf
 * tmux
 * alacritty
-* oh my zsh * 10k theme with awesome nerd fonts
+* oh my zsh with 10k theme with awesome nerd fonts
 
 use setup1 in scripts/rcs/setup1
 
