@@ -10,11 +10,11 @@ How to install:
 
 stuff you'll need:
 
-* - exuberant ctags
-* - node
-* - fzf
-* - tmux
-* - alacritty
+* exuberant ctags
+* node
+* fzf
+* tmux
+* alacritty
 
 use setup1 in scripts/rcs/setup1
 
