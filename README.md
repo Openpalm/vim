@@ -13,6 +13,13 @@ stuff you'll need:
 * - exuberant ctags
 * - node
 * - fzf
-* - tbc..
+* - tmux
+* - alacritty
+
+use setup1 in scripts/rcs/setup1
+
+execute the link script.
+
+coc.vim will require some fiddling if the release branch is broken. solution described in setup1/vimrc
 
 Enjoy!
