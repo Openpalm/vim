@@ -10,6 +10,9 @@ How to install:
 
 stuff you'll need:
 
-* - Tagbar and ctags need ctags
+* - exuberant ctags
+* - node
+* - fzf
+* - tbc..
 
 Enjoy!
