@@ -21,13 +21,22 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'altercation/vim-colors-solarized'
+Plugin 'kien/rainbow_parentheses.vim'
 Plugin 'maksimr/vim-jsbeautify'
 Plugin 'preservim/nerdcommenter' " \cc & \cu - works for visual mode
 Plugin 'phpactor/phpactor' ,  {'do': 'composer install', 'for': 'php'}
 Plugin '907th/vim-auto-save'
 Plugin 'mattn/emmet-vim'
-Plugin 'vim-syntastic/syntastic'
-Plugin 'kien/rainbow_parentheses.vim'
+
+"Plugin 'vim-syntastic/syntastic'
+
+"Plugin 'vim-scripts/L9'
+"Plugin 'std0d9k81/acp.vim'
+"Plugin 'othree/vim-autocomplpop'
+
+Plugin 'SirVer/ultisnips'
+Plugin 'rstacruz/vim-ultisnips-css'
+
 "Plugin 'shawncplus/phpcomplete.vim'
 "Plugin 'msjyoo/vim-autocomplpop-php'
 "Plugin 'sheerun/vim-polyglot'
@@ -36,8 +45,9 @@ Plugin 'dense-analysis/ale'
 "Plugin 'prabirshrestha/asyncomplete.vim'
 "Plugin 'prabirshrestha/asyncomplete-lsp.vim'
 
-Plugin 'hrsh7th/vim-vsnip'
-Plugin 'hrsh7th/vim-vsnip-integ'
+
+"Plugin 'hrsh7th/vim-vsnip'
+"Plugin 'hrsh7th/vim-vsnip-integ'
 Plugin 'neoclide/coc.nvim', {'branch': 'release'}
 "coc debug
 "cd ~/.vim/bundle/coc.nvim/ && git reset head --hard
@@ -45,6 +55,11 @@ Plugin 'neoclide/coc.nvim', {'branch': 'release'}
 "run call coc#util#install()
 
 call vundle#end()
+
+augroup css
+    autocmd!
+    autocmd FileType css,html setlocal iskeyword+=-
+augroup END
 
 "languge server lsp stuff
 let g:lsp_log_verbose = 1
