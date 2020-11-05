@@ -14,7 +14,7 @@ SRCPATH=~/.screenrc
 if [ -f "$VRCPATH" ] ; then mv ~/.vimrc ~/.vimrc-legacy-"`date +%F-%H:%M:%S`";fi
 if [ -f "$SRCPATH" ]; then mv ~/.screenrc ~/.screen-legacy-"`date +%F-%H:%M:%S`";fi
 
-ln -s ~/.vim/scripts/rcs/vimrc ~/.vimrc
-ln -s ~/.vim/scripts/rcs/screenrc ~/.screenrc
-
+sh -e ./scripts/rcs/setup1/link
 vim +PluginInstall +qall
+vim +PluginUpdate +qall
+vim -c "call coc#util#install()"
