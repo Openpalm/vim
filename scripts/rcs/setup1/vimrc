@@ -57,9 +57,15 @@ Plugin 'neoclide/coc.nvim', {'branch': 'release'}
 call vundle#end()
 
 augroup css
-    autocmd!
-    autocmd FileType css,html setlocal iskeyword+=-
+  autocmd!
+  autocmd FileType css,html setlocal iskeyword+=-
 augroup END
+
+augroup scss
+  autocmd!
+  autocmd FileType scss setl iskeyword+=@-@
+augroup END
+
 
 "languge server lsp stuff
 let g:lsp_log_verbose = 1
@@ -103,12 +109,12 @@ let g:syntastic_enable_highlighting=1
 let g:syntastic_echo_current_error=1
 let g:syntastic_php_checkers = ['php', 'phpcs', 'phpmd']
 let g:syntastic_mode_map = { 'mode': 'active',
-                            \ 'active_filetypes': 
-                            \ [
-                            \'php',
-                            \ 'python', 'javascript'
-                            \],
-                            \ 'passive_filetypes': [] }
+      \ 'active_filetypes': 
+      \ [
+      \'php',
+      \ 'python', 'javascript'
+      \],
+      \ 'passive_filetypes': [] }
 let g:syntastic_javascript_checkers = ['eslint']
 "rainbow brackets
 let g:rbpt_max = 16
@@ -118,23 +124,23 @@ au Syntax * RainbowParenthesesLoadRound
 au Syntax * RainbowParenthesesLoadSquare
 au Syntax * RainbowParenthesesLoadBraces
 let g:rbpt_colorpairs = [
-    \ ['brown',       'RoyalBlue3'],
-    \ ['Darkblue',    'SeaGreen3'],
-    \ ['darkgray',    'DarkOrchid3'],
-    \ ['darkgreen',   'firebrick3'],
-    \ ['darkcyan',    'RoyalBlue3'],
-    \ ['darkred',     'SeaGreen3'],
-    \ ['darkmagenta', 'DarkOrchid3'],
-    \ ['brown',       'firebrick3'],
-    \ ['gray',        'RoyalBlue3'],
-    \ ['black',       'SeaGreen3'],
-    \ ['darkmagenta', 'DarkOrchid3'],
-    \ ['Darkblue',    'firebrick3'],
-    \ ['darkgreen',   'RoyalBlue3'],
-    \ ['darkcyan',    'SeaGreen3'],
-    \ ['darkred',     'DarkOrchid3'],
-    \ ['red',         'firebrick3'],
-    \ ]
+      \ ['brown',       'RoyalBlue3'],
+      \ ['Darkblue',    'SeaGreen3'],
+      \ ['darkgray',    'DarkOrchid3'],
+      \ ['darkgreen',   'firebrick3'],
+      \ ['darkcyan',    'RoyalBlue3'],
+      \ ['darkred',     'SeaGreen3'],
+      \ ['darkmagenta', 'DarkOrchid3'],
+      \ ['brown',       'firebrick3'],
+      \ ['gray',        'RoyalBlue3'],
+      \ ['black',       'SeaGreen3'],
+      \ ['darkmagenta', 'DarkOrchid3'],
+      \ ['Darkblue',    'firebrick3'],
+      \ ['darkgreen',   'RoyalBlue3'],
+      \ ['darkcyan',    'SeaGreen3'],
+      \ ['darkred',     'DarkOrchid3'],
+      \ ['red',         'firebrick3'],
+      \ ]
 " Tab control
 set expandtab
 set smarttab " tab respects 'tabstop', 'shiftwidth', and 'softtabstop'
@@ -280,7 +286,7 @@ endif
 " Make <CR> auto-select the first completion item and notify coc.nvim to
 " format on enter, <cr> could be remapped by other vim plugin
 inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
-                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+      \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 
 "autocomplete settings 
