@@ -288,4 +288,4 @@ augroup omni_complete
   autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 augroup END
 
-map <leader>i gg=G<CR>
+map <leader>i gg=G''<CR>
