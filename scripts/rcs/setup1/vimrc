@@ -1,9 +1,16 @@
+filetype indent plugin on
+syntax enable
+
 set nocompatible
 set nu
 set laststatus=2
 set termencoding=utf-8
-filetype indent plugin on
-syntax enable
+set nocompatible
+set runtimepath=~/.vim/bundle/vim-lsp,$VIMRUNTIME
+let mapleader = " " " map leader to Space
+set omnifunc=lsp#complete
+
+
 
 
 "#######################
@@ -18,12 +25,19 @@ Plugin 'maksimr/vim-jsbeautify'
 Plugin 'preservim/nerdcommenter' " \cc & \cu - works for visual mode
 Plugin 'phpactor/phpactor' ,  {'do': 'composer install', 'for': 'php'}
 Plugin '907th/vim-auto-save'
+Plugin 'mattn/emmet-vim'
 Plugin 'vim-syntastic/syntastic'
 Plugin 'kien/rainbow_parentheses.vim'
-Plugin 'shawncplus/phpcomplete.vim'
-Plugin 'msjyoo/vim-autocomplpop-php'
+"Plugin 'shawncplus/phpcomplete.vim'
+"Plugin 'msjyoo/vim-autocomplpop-php'
 Plugin 'sheerun/vim-polyglot'
 Plugin 'dense-analysis/ale'
+Plugin 'prabirshrestha/vim-lsp'
+Plugin 'prabirshrestha/asyncomplete.vim'
+Plugin 'prabirshrestha/asyncomplete-lsp.vim'
+
+Plugin 'hrsh7th/vim-vsnip'
+Plugin 'hrsh7th/vim-vsnip-integ'
 Plugin 'neoclide/coc.nvim', {'branch': 'release'}
 "coc debug
 "cd ~/.vim/bundle/coc.nvim/ && git reset head --hard
@@ -32,8 +46,24 @@ Plugin 'neoclide/coc.nvim', {'branch': 'release'}
 
 call vundle#end()
 
+"languge server lsp stuff
+let g:lsp_log_verbose = 1
+let g:lsp_log_file = expand('~/vim-lsp.log')
+
+"emmet 
+imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
+let g:user_emmet_mode='inv'    "enable all function in all mode.
+let g:user_emmet_expandabbr_key='<Tab>'
+
+let g:user_emmet_install_global = 0
+autocmd FileType html,css,php EmmetInstall
+
+augroup EmmetSettings
+  autocmd! FileType html imap <tab> <plug>(emmet-expand-abbr)
+augroup END
+
 "ale
-let g:ale_sign_error = '❌'
+"let g:ale_sign_error = '❌'
 let g:ale_sign_warning = '⚠️'
 "beautify
 map <c-f> :call JsBeautify()<cr> "ctrl-f
@@ -168,18 +198,92 @@ let $PATH = '/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/basselkhatib/bi
 
 " Automatically closing braces
 inoremap _{ {<CR>}<Esc>ko
-inoremap _[ []<Esc>i
-inoremap _( ()<Esc>i
+inoremap _[ [<CR>]<Esc>ko
+inoremap _( (<CR>)<Esc>ko
+
+inoremap { {}<Esc>i
+inoremap [ []<Esc>i
+inoremap ( ()<Esc>i
+
 inoremap _< <><Esc>i
 
 "general mappings
 nnoremap sss :%s/\s\+$//<CR>
-nnoremap rrr :source ~/.vimrc<CR>
-nnoremap <c-a> :NERDTreeToggle<CR>
-nnoremap <c-q> :q!<CR>
-nnoremap <c-s> :w!<CR>
-nnoremap <c-z> :PluginInstall<CR>
-nnoremap <c-x> :PluginClean!<CR>
+nnoremap <leader>r :source ~/.vimrc<CR>
+nnoremap <leader>e :tab new ~/.vimrc<CR>
+nnoremap <leader>a :NERDTreeToggle<CR>
+nnoremap <leader>q :q!<CR>
+nnoremap <leader>s :w!<CR>
+nnoremap <leader>z :PluginInstall<CR>
+nnoremap <leader>x :PluginClean!<CR>
 
 "When hitting Enter, if the line doesn't start with a /*, insert a semicolon
-"inoremap <CR> <C-R>=((match(getline('.'), '\s*/\*')==-1) && (match(getline('.'), '\s*/int')==-1))?';':''<CR><CR>
+"autocmd FileType php, css setlocal omnifunc=inoremap <CR> <C-R>=((match(getline('.'), '\s*/\*')==-1) && (match(getline('.'), '\s*/int')==-1))?';':''<CR><CR>
+
+" TextEdit might fail if hidden is not set.
+set hidden
+" Some servers have issues with backup files, see #649.
+set nobackup
+set nowritebackup
+" Give more space for displaying messages.
+set cmdheight=2
+" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
+" delays and poor user experience.
+set updatetime=300
+" Don't pass messages to |ins-completion-menu|.
+set shortmess+=c
+" Always show the signcolumn, otherwise it would shift the text each time
+" diagnostics appear/become resolved.
+if has("patch-8.1.1564")
+  " Recently vim can merge signcolumn and number column into one
+  set signcolumn=number
+else
+  set signcolumn=yes
+endif
+
+" Use tab for trigger completion with characters ahead and navigate.
+" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+" other plugin before putting this into your config.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Use <c-space> to trigger completion.
+if has('nvim')
+  inoremap <silent><expr> <c-space> coc#refresh()
+else
+  inoremap <silent><expr> <c-@> coc#refresh()
+endif
+
+" Make <CR> auto-select the first completion item and notify coc.nvim to
+" format on enter, <cr> could be remapped by other vim plugin
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+
+"autocomplete settings 
+
+set infercase
+set completeopt=longest,menuone
+set omnifunc=syntaxcomplete#Complete
+set completefunc=syntaxcomplete#Complete
+set complete=.,w,b,u,U,t,i,d
+
+augroup omni_complete
+  " clear commands before resetting
+  autocmd!
+  " Enable omnicomplete for supported filetypes
+  autocmd FileType css,scss setlocal omnifunc=csscomplete#CompleteCSS
+  autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+  autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+  autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+  autocmd FileType php setlocal omnifunc=phpcomplete#Complete
+  autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+augroup END
