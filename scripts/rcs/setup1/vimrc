@@ -30,7 +30,7 @@ Plugin 'vim-syntastic/syntastic'
 Plugin 'kien/rainbow_parentheses.vim'
 "Plugin 'shawncplus/phpcomplete.vim'
 "Plugin 'msjyoo/vim-autocomplpop-php'
-Plugin 'sheerun/vim-polyglot'
+"Plugin 'sheerun/vim-polyglot'
 Plugin 'dense-analysis/ale'
 Plugin 'prabirshrestha/vim-lsp'
 Plugin 'prabirshrestha/asyncomplete.vim'
@@ -38,7 +38,7 @@ Plugin 'prabirshrestha/asyncomplete-lsp.vim'
 
 Plugin 'hrsh7th/vim-vsnip'
 Plugin 'hrsh7th/vim-vsnip-integ'
-Plugin 'neoclide/coc.nvim', {'branch': 'release'}
+"Plugin 'neoclide/coc.nvim', {'branch': 'release'}
 "coc debug
 "cd ~/.vim/bundle/coc.nvim/ && git reset head --hard
 "open vim && :PluginUpdate
@@ -287,3 +287,5 @@ augroup omni_complete
   autocmd FileType php setlocal omnifunc=phpcomplete#Complete
   autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 augroup END
+
+map <leader>i gg=G<CR>
