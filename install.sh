@@ -22,3 +22,4 @@ vim -c "CocInstall coc-css"
 npm install -g csslint
 npm install -g PrettyCSS
 
+brew install fzf
