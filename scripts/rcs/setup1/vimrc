@@ -23,6 +23,7 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'preservim/nerdcommenter' " \cc & \cu - works for visual mode
 Plugin 'tyru/open-browser.vim'
 Plugin '907th/vim-auto-save'
+Plugin 'ctrlpvim/ctrlp.vim'
 
 "#####################
 " looks
@@ -75,13 +76,32 @@ augroup END
 
 
 "#######################
+" CtrlP
+"#######################
+
+let g:ctrlp_map = '<leader>p'
+let g:ctrlp_cmd = 'CtrlP'
+
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
+set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe  " Windows
+
+let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/]\.(git|hg|svn)$',
+  \ 'file': '\v\.(exe|so|dll)$',
+  \ 'link': 'some_bad_symbolic_links',
+  \ }
+let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
+
+
+"#######################
 "languge server lsp stuff
 "#######################
 let g:lsp_log_verbose = 1
 let g:lsp_log_file = expand('~/vim-lsp.log')
 
 "#######################
-"emmet 
+"emmet
 "#######################
 imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
 let g:user_emmet_mode='inv'    "enable all function in all mode.
@@ -150,12 +170,12 @@ let g:syntastic_php_checkers = ['phpcs']
 let g:syntastic_css_checkers = ['PrettyCSS'] "'csslint' <- really verbose with over the top settings. no idea how to disbale fuck it.
 let g:syntastic_javascript_checkers = ['eslint']
 let g:syntastic_mode_map = { 'mode': 'active',
-      \ 'active_filetypes': 
+      \ 'active_filetypes':
       \ [
       \ 'html',
       \ 'css',
       \ 'php',
-      \ 'python', 
+      \ 'python',
       \ 'javascript'
       \],
       \ 'passive_filetypes': [] }
@@ -195,7 +215,7 @@ set expandtab
 set smarttab " tab respects 'tabstop', 'shiftwidth', and 'softtabstop'
 set tabstop=2 " the visible width of tabs
 set softtabstop=2 " edit as if the tabs are 4 characters wide
-set shiftwidth=4 " number of spaces to use for indent and unindent
+set shiftwidth=2 " number of spaces to use for indent and unindent
 set shiftround " round indent to a multiple of 'shiftwidth'
 %retab
 
@@ -279,14 +299,14 @@ function! s:check_back_space() abort
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
-"candidate for removal 
-"candidate for removal 
-"candidate for removal 
-"candidate for removal 
-"candidate for removal 
-"candidate for removal 
-"candidate for removal 
-"candidate for removal 
+"candidate for removal
+"candidate for removal
+"candidate for removal
+"candidate for removal
+"candidate for removal
+"candidate for removal
+"candidate for removal
+"candidate for removal
 if has('nvim')
   inoremap <silent><expr> <c-space> coc#refresh()
 else
@@ -299,7 +319,7 @@ inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
       \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 
-"autocomplete settings 
+"autocomplete settings
 
 "set infercase
 "set completeopt=longest,menuone
@@ -321,14 +341,14 @@ inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
 
 
 
-"candidate for removal 
-"candidate for removal 
-"candidate for removal 
-"candidate for removal 
-"candidate for removal 
-"candidate for removal 
-"candidate for removal 
-"candidate for removal 
+"candidate for removal
+"candidate for removal
+"candidate for removal
+"candidate for removal
+"candidate for removal
+"candidate for removal
+"candidate for removal
+"candidate for removal
 
 
 "#######################
@@ -351,8 +371,9 @@ inoremap ( ()<Esc>i
 inoremap _< <><Esc>i
 
 "#######################
-"general mappings
+"       mappings
 "#######################
+
 nnoremap sss :%s/\s\+$//<CR>
 nnoremap <leader>r :source ~/.vimrc<CR>
 nnoremap <leader>v :tab new ~/.vimrc<CR>
@@ -367,7 +388,8 @@ nnoremap <leader>i gg=G''<CR>
 nnoremap <leader>s :g#\({\n\)\@<=#.,/}/sort<CR>
 
 nnoremap <leader>co :Wcodexsearch<CR>
- 
+
+
 
 "#######################
 " grafix

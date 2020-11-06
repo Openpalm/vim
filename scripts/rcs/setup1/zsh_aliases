@@ -25,11 +25,11 @@ alias  mysqldebug='/Applications/MAMP/Library/bin/mysqld_safe \
 --socket=/Applications/MAMP/tmp/mysql/mysql.sock \
 --pid-file=/Applications/MAMP/tmp/mysql/mysql.pid && sleep 1 && /Applications/MAMP/Library/bin/mysql
 '
-alias cdmamp="cd /Applications/MAMP"
+alias gotomamp="cd /Applications/MAMP"
 alias lsmamp="ls /Applications/MAMP"
 alias lsmampbin="ls /Applications/MAMP/bin"
 
-alias inno="cd /Applications/MAMP/htdocs/wordpress/wp-content/themes/inno"
+alias gotoinno="cd /Applications/MAMP/htdocs/wordpress/wp-content/themes/inno"
 
 
 #================= Admin Aliases =================#
@@ -42,4 +42,3 @@ alias st="git status ."
 
 
 alias vlc='/usr/local/bin/youtube-dl  -f webm $*'
-
