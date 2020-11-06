@@ -28,7 +28,7 @@ Plugin 'phpactor/phpactor' ,  {'do': 'composer install', 'for': 'php'}
 Plugin '907th/vim-auto-save'
 Plugin 'mattn/emmet-vim'
 
-"Plugin 'vim-syntastic/syntastic'
+Plugin 'vim-syntastic/syntastic'
 
 "Plugin 'vim-scripts/L9'
 "Plugin 'std0d9k81/acp.vim'
@@ -85,7 +85,7 @@ augroup END
 
 "ale
 "let g:ale_sign_error = '❌'
-let g:ale_sign_warning = '⚠️'
+"let g:ale_sign_warning = '⚠️'
 "beautify
 map <c-f> :call JsBeautify()<cr> "ctrl-f
 autocmd FileType javascript noremap <buffer>  <c-f> :call JsBeautify()<cr>
@@ -105,6 +105,8 @@ set statusline+=%#warningmsg#
 "let g:syntastic_check_on_open = 0
 "let g:syntastic_check_on_wq = 0
 let g:syntastic_enable_signs=1
+let g:syntastic_error_symbol = "\u2717"
+let g:syntastic_warning_symbol = "\u26A0"
 let g:syntastic_enable_highlighting=1
 let g:syntastic_echo_current_error=1
 let g:syntastic_php_checkers = ['php', 'phpcs', 'phpmd']
@@ -314,3 +316,5 @@ inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
 "augroup END
 
 map <leader>i gg=G''<CR>
+map <leader>o g#\({\n\)\@<=#.,/}/sort<CR>
+

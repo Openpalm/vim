@@ -1,0 +1,40 @@
+# alias for editing rcs and console files 
+alias ea='vim $HOME/.zshfiles/aliases'
+alias ez='vim ~/.zshrc'
+alias ev='vim ~/.vimrc'
+alias evs='vim ~/Library/Application\ Support/Code/User/settings.json'
+alias etm='vim ~/.tmux.conf'
+
+
+# Make life better
+alias grep='grep -in --color'
+alias du='du -h'
+alias df='df -h'
+alias sudo='nocorrect sudo'
+alias rrr='echo "reloading rc" && source ~/.zshrc'
+
+# ssh
+alias sa='eval $(ssh-agent);ssh-add -t 2h'
+alias sk='ssh-agent -k'
+
+#MAMP
+alias  docroot='cd /Applications/MAMP/htdocs/'
+alias  mysqldebug='/Applications/MAMP/Library/bin/mysqld_safe \
+--skip-grant-tables \
+--skip-networking \
+--socket=/Applications/MAMP/tmp/mysql/mysql.sock \
+--pid-file=/Applications/MAMP/tmp/mysql/mysql.pid && sleep 1 && /Applications/MAMP/Library/bin/mysql
+'
+alias cdmamp="cd /Applications/MAMP"
+alias lsmamp="ls /Applications/MAMP"
+alias lsmampbin="ls /Applications/MAMP/bin"
+
+
+#================= Admin Aliases =================#
+alias lsports='lsof -PiTCP -sTCP:LISTEN'
+alias lsports+='sudo lsof -PiTCP -sTCP:LISTEN'
+#=================================================#
+
+
+alias vlc='/usr/local/bin/youtube-dl  -f webm $*'
+
