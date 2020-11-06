@@ -35,6 +35,9 @@ alias inno="cd /Applications/MAMP/htdocs/wordpress/wp-content/themes/inno"
 #================= Admin Aliases =================#
 alias lsports='lsof -PiTCP -sTCP:LISTEN'
 alias lsports+='sudo lsof -PiTCP -sTCP:LISTEN'
+
+#================= Git =================#
+alias st="git status ."
 #=================================================#
 
 
