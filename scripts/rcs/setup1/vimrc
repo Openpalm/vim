@@ -10,46 +10,42 @@ set runtimepath=~/.vim/bundle/vim-lsp,$VIMRUNTIME
 let mapleader = " " " map leader to Space
 set omnifunc=lsp#complete
 
-
-
-
 "#######################
 " vundles and their configs
 "#######################
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
+"#####################
+"functional addons
+"#####################
 Plugin 'scrooloose/nerdtree'
+Plugin 'preservim/nerdcommenter' " \cc & \cu - works for visual mode
+Plugin '907th/vim-auto-save'
+
+"#####################
+" looks
+"#####################
+Plugin 'morhetz/gruvbox'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'kien/rainbow_parentheses.vim'
-Plugin 'maksimr/vim-jsbeautify'
-Plugin 'preservim/nerdcommenter' " \cc & \cu - works for visual mode
+
+
+"#####################
+" dev stack plugins
+"#####################
+Plugin 'dsawardekar/wordpress.vim'
 Plugin 'phpactor/phpactor' ,  {'do': 'composer install', 'for': 'php'}
-Plugin '907th/vim-auto-save'
+Plugin 'maksimr/vim-jsbeautify'
 Plugin 'mattn/emmet-vim'
 
-Plugin 'vim-syntastic/syntastic'
-
-"Plugin 'vim-scripts/L9'
-"Plugin 'std0d9k81/acp.vim'
-"Plugin 'othree/vim-autocomplpop'
-
+"#####################
+" linters, code analysis, etc.
+"#####################
+Plugin 'dense-analysis/ale'
 Plugin 'SirVer/ultisnips'
 Plugin 'rstacruz/vim-ultisnips-css'
-
-"Plugin 'shawncplus/phpcomplete.vim'
-"Plugin 'msjyoo/vim-autocomplpop-php'
-"Plugin 'sheerun/vim-polyglot'
-
-Plugin 'dense-analysis/ale'
-
-"Plugin 'prabirshrestha/vim-lsp'
-"Plugin 'prabirshrestha/asyncomplete.vim'
-"Plugin 'prabirshrestha/asyncomplete-lsp.vim'
-
-
-"Plugin 'hrsh7th/vim-vsnip'
-"Plugin 'hrsh7th/vim-vsnip-integ'
+Plugin 'vim-syntastic/syntastic'
 Plugin 'neoclide/coc.nvim', {'branch': 'release'}
 "coc debug
 "cd ~/.vim/bundle/coc.nvim/ && git reset head --hard
@@ -57,6 +53,7 @@ Plugin 'neoclide/coc.nvim', {'branch': 'release'}
 "run call coc#util#install()
 
 call vundle#end()
+
 
 augroup css
   autocmd!
@@ -69,11 +66,15 @@ augroup scss
 augroup END
 
 
+"#######################
 "languge server lsp stuff
+"#######################
 let g:lsp_log_verbose = 1
 let g:lsp_log_file = expand('~/vim-lsp.log')
 
+"#######################
 "emmet 
+"#######################
 imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
 let g:user_emmet_mode='inv'    "enable all function in all mode.
 let g:user_emmet_expandabbr_key='<Tab>'
@@ -85,7 +86,9 @@ augroup EmmetSettings
   autocmd! FileType html imap <tab> <plug>(emmet-expand-abbr)
 augroup END
 
+"#######################
 "ale
+"#######################
 "let g:ale_sign_error = '❌'
 "let g:ale_sign_warning = '❌'
 
@@ -112,24 +115,26 @@ endfunction
 set statusline=%{LinterStatus()}
 let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
 
+"#######################
 "beautify
+"#######################
 map <c-f> :call JsBeautify()<cr> "ctrl-f
 autocmd FileType javascript noremap <buffer>  <c-f> :call JsBeautify()<cr>
 autocmd FileType json noremap <buffer> <c-f> :call JsonBeautify()<cr>
 autocmd FileType jsx noremap <buffer> <c-f> :call JsxBeautify()<cr>
 autocmd FileType html noremap <buffer> <c-f> :call HtmlBeautify()<cr>
 autocmd FileType css noremap <buffer> <c-f> :call CSSBeautify()<cr>
+
+"#######################
 "autosave
+"#######################
 let g:auto_save = 1
 let g:auto_save_events = ["InsertLeave", "TextChanged"]
+
+"#######################
 "syntastic
+"#######################
 set statusline+=%#warningmsg#
-"set statusline+=%{SyntasticStatuslineFlag()}
-"set statusline+=%*
-"let g:syntastic_always_populate_loc_list = 0
-"let g:syntastic_auto_loc_list = 0
-"let g:syntastic_check_on_open = 0
-"let g:syntastic_check_on_wq = 0
 let g:syntastic_enable_signs=1
 let g:syntastic_enable_highlighting= 1
 let g:syntastic_echo_current_error=1
@@ -146,7 +151,10 @@ let g:syntastic_mode_map = { 'mode': 'active',
       \ 'javascript'
       \],
       \ 'passive_filetypes': [] }
+
+"#######################
 "rainbow brackets
+"#######################
 let g:rbpt_max = 16
 let g:rbpt_loadcmd_toggle = 0
 au VimEnter * RainbowParenthesesToggle
@@ -171,7 +179,10 @@ let g:rbpt_colorpairs = [
       \ ['darkred',     'DarkOrchid3'],
       \ ['red',         'firebrick3'],
       \ ]
+
+"#######################
 " Tab control
+"#######################
 set expandtab
 set smarttab " tab respects 'tabstop', 'shiftwidth', and 'softtabstop'
 set tabstop=2 " the visible width of tabs
@@ -209,8 +220,7 @@ augroup NoSimulataneousEdits
   autocmd SwapExists * let v:swapchoice= 'o'
   autocmd SwapExists * echomsg ErrorMsg
   autocmd SwapExists * echo 'Duplicate edit session (readonly)'
-  autocmd SwapExists * echohl None
-augroup END
+  autocmd SwapExists * echohl None augroup END
 
 "#######################
 " window resizing
@@ -229,17 +239,6 @@ nnoremap <silent> <UP> :call RESIZEVERT("+")<CR>
 nnoremap <silent> <LEFT> :vertical resize +2<CR>
 nnoremap <silent> <RIGHT> :vertical resize -2<CR>
 
-"#######################
-" grafix so we can see shit
-"#######################
-
-if has("gui_running")
-  set guifont=Monaco:h13
-  set guifontwide=Hiragino\ Sans\ GB
-  set linespace=2
-  set background=dark
-  colorscheme solarized
-endif
 
 
 "When hitting Enter, if the line doesn't start with a /*, insert a semicolon
@@ -247,20 +246,12 @@ endif
 
 " TextEdit might fail if hidden is not set.
 set hidden
-" Some servers have issues with backup files, see #649.
 set nobackup
 set nowritebackup
-" Give more space for displaying messages.
 set cmdheight=2
-" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
-" delays and poor user experience.
 set updatetime=300
-" Don't pass messages to |ins-completion-menu|.
 set shortmess+=c
-" Always show the signcolumn, otherwise it would shift the text each time
-" diagnostics appear/become resolved.
 if has("patch-8.1.1564")
-  " Recently vim can merge signcolumn and number column into one
   set signcolumn=number
 else
   set signcolumn=yes
@@ -280,7 +271,14 @@ function! s:check_back_space() abort
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
-" Use <c-space> to trigger completion.
+"candidate for removal 
+"candidate for removal 
+"candidate for removal 
+"candidate for removal 
+"candidate for removal 
+"candidate for removal 
+"candidate for removal 
+"candidate for removal 
 if has('nvim')
   inoremap <silent><expr> <c-space> coc#refresh()
 else
@@ -313,13 +311,27 @@ inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
 "  autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 "augroup END
 
+
+
+"candidate for removal 
+"candidate for removal 
+"candidate for removal 
+"candidate for removal 
+"candidate for removal 
+"candidate for removal 
+"candidate for removal 
+"candidate for removal 
+
+
 "#######################
 " PATH var, need ENV for node and composer.
 "#######################
 
 let $PATH = '/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/basselkhatib/bin:/Users/basselkhatib/.composer/vendor/bin' .':'. $PATH
 
+"#######################
 " Automatically closing braces
+"#######################
 inoremap _{ {<CR>}<Esc>ko
 inoremap _[ [<CR>]<Esc>ko
 inoremap _( (<CR>)<Esc>ko
@@ -330,10 +342,14 @@ inoremap ( ()<Esc>i
 
 inoremap _< <><Esc>i
 
+"#######################
 "general mappings
+"#######################
 nnoremap sss :%s/\s\+$//<CR>
 nnoremap <leader>r :source ~/.vimrc<CR>
-nnoremap <leader>e :tab new ~/.vimrc<CR>
+nnoremap <leader>v :tab new ~/.vimrc<CR>
+nnoremap [ :lnext<CR>
+nnoremap ] :lprev<CR>
 nnoremap <leader>a :NERDTreeToggle<CR>
 nnoremap <leader>q :q!<CR>
 nnoremap <leader>w :w!<CR>
@@ -342,3 +358,14 @@ nnoremap <leader>x :PluginClean!<CR>
 nnoremap <leader>i gg=G''<CR>
 nnoremap <leader>s :g#\({\n\)\@<=#.,/}/sort<CR>
 
+"#######################
+" grafix
+"#######################
+
+if has("gui_running")
+  set guifont=Monaco:h13
+  set guifontwide=Hiragino\ Sans\ GB
+  set linespace=2
+endif
+set background=dark
+colorscheme gruvbox

@@ -29,6 +29,8 @@ alias cdmamp="cd /Applications/MAMP"
 alias lsmamp="ls /Applications/MAMP"
 alias lsmampbin="ls /Applications/MAMP/bin"
 
+alias inno="cd /Applications/MAMP/htdocs/wordpress/wp-content/themes/inno"
+
 
 #================= Admin Aliases =================#
 alias lsports='lsof -PiTCP -sTCP:LISTEN'
