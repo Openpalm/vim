@@ -40,7 +40,9 @@ Plugin 'rstacruz/vim-ultisnips-css'
 "Plugin 'shawncplus/phpcomplete.vim'
 "Plugin 'msjyoo/vim-autocomplpop-php'
 "Plugin 'sheerun/vim-polyglot'
+
 Plugin 'dense-analysis/ale'
+
 "Plugin 'prabirshrestha/vim-lsp'
 "Plugin 'prabirshrestha/asyncomplete.vim'
 "Plugin 'prabirshrestha/asyncomplete-lsp.vim'
@@ -85,7 +87,31 @@ augroup END
 
 "ale
 "let g:ale_sign_error = '❌'
-"let g:ale_sign_warning = '⚠️'
+"let g:ale_sign_warning = '❌'
+
+highlight clear ALEErrorSign
+highlight clear ALEWarningSign
+let g:ale_set_highlights = 0
+highlight ALEWarning ctermbg=DarkMagenta
+let g:ale_sign_error = '>>'
+let g:ale_sign_warning = '--'
+
+function! LinterStatus() abort
+    let l:counts = ale#statusline#Count(bufnr(''))
+
+    let l:all_errors = l:counts.error + l:counts.style_error
+    let l:all_non_errors = l:counts.total - l:all_errors
+
+    return l:counts.total == 0 ? 'OK' : printf(
+    \   '%dW %dE',
+    \   all_non_errors,
+    \   all_errors
+    \)
+endfunction
+
+set statusline=%{LinterStatus()}
+let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+
 "beautify
 map <c-f> :call JsBeautify()<cr> "ctrl-f
 autocmd FileType javascript noremap <buffer>  <c-f> :call JsBeautify()<cr>
@@ -105,12 +131,11 @@ set statusline+=%#warningmsg#
 "let g:syntastic_check_on_open = 0
 "let g:syntastic_check_on_wq = 0
 let g:syntastic_enable_signs=1
-let g:syntastic_error_symbol = "\u2717"
-let g:syntastic_warning_symbol = "\u26A0"
-let g:syntastic_enable_highlighting=1
+let g:syntastic_enable_highlighting= 1
 let g:syntastic_echo_current_error=1
-let g:syntastic_php_checkers = ['php', 'phpcs', 'phpmd']
-let g:syntastic_css_checkers = ['csslint', 'PrettyCSS']
+let g:syntastic_php_checkers = ['phpcs']
+let g:syntastic_css_checkers = ['PrettyCSS'] "'csslint' <- really verbose with over the top settings. no idea how to disbale fuck it.
+let g:syntastic_javascript_checkers = ['eslint']
 let g:syntastic_mode_map = { 'mode': 'active',
       \ 'active_filetypes': 
       \ [
@@ -121,7 +146,6 @@ let g:syntastic_mode_map = { 'mode': 'active',
       \ 'javascript'
       \],
       \ 'passive_filetypes': [] }
-let g:syntastic_javascript_checkers = ['eslint']
 "rainbow brackets
 let g:rbpt_max = 16
 let g:rbpt_loadcmd_toggle = 0
@@ -217,32 +241,6 @@ if has("gui_running")
   colorscheme solarized
 endif
 
-"#######################
-" PATH var, need ENV for node and composer.
-"#######################
-
-let $PATH = '/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/basselkhatib/bin:/Users/basselkhatib/.composer/vendor/bin' .':'. $PATH
-
-" Automatically closing braces
-inoremap _{ {<CR>}<Esc>ko
-inoremap _[ [<CR>]<Esc>ko
-inoremap _( (<CR>)<Esc>ko
-
-inoremap { {}<Esc>i
-inoremap [ []<Esc>i
-inoremap ( ()<Esc>i
-
-inoremap _< <><Esc>i
-
-"general mappings
-nnoremap sss :%s/\s\+$//<CR>
-nnoremap <leader>r :source ~/.vimrc<CR>
-nnoremap <leader>e :tab new ~/.vimrc<CR>
-nnoremap <leader>a :NERDTreeToggle<CR>
-nnoremap <leader>q :q!<CR>
-nnoremap <leader>s :w!<CR>
-nnoremap <leader>z :PluginInstall<CR>
-nnoremap <leader>x :PluginClean!<CR>
 
 "When hitting Enter, if the line doesn't start with a /*, insert a semicolon
 "autocmd FileType php, css setlocal omnifunc=inoremap <CR> <C-R>=((match(getline('.'), '\s*/\*')==-1) && (match(getline('.'), '\s*/int')==-1))?';':''<CR><CR>
@@ -315,6 +313,32 @@ inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
 "  autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 "augroup END
 
-map <leader>i gg=G''<CR>
-map <leader>o g#\({\n\)\@<=#.,/}/sort<CR>
+"#######################
+" PATH var, need ENV for node and composer.
+"#######################
+
+let $PATH = '/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/basselkhatib/bin:/Users/basselkhatib/.composer/vendor/bin' .':'. $PATH
+
+" Automatically closing braces
+inoremap _{ {<CR>}<Esc>ko
+inoremap _[ [<CR>]<Esc>ko
+inoremap _( (<CR>)<Esc>ko
+
+inoremap { {}<Esc>i
+inoremap [ []<Esc>i
+inoremap ( ()<Esc>i
+
+inoremap _< <><Esc>i
+
+"general mappings
+nnoremap sss :%s/\s\+$//<CR>
+nnoremap <leader>r :source ~/.vimrc<CR>
+nnoremap <leader>e :tab new ~/.vimrc<CR>
+nnoremap <leader>a :NERDTreeToggle<CR>
+nnoremap <leader>q :q!<CR>
+nnoremap <leader>w :w!<CR>
+nnoremap <leader>z :PluginInstall<CR>
+nnoremap <leader>x :PluginClean!<CR>
+nnoremap <leader>i gg=G''<CR>
+nnoremap <leader>s :g#\({\n\)\@<=#.,/}/sort<CR>
 
