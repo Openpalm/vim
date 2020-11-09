@@ -11,7 +11,7 @@ fi
 
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 ZSH_THEME="powerlevel10k/powerlevel10k"
-plugins=(git fzf zsh-completion)
+plugins=(git fzf zsh-completions)
 autoload -U compinit && compinit 
 
 source $HOME/.vim/scripts/rcs/setup1/zsh_aliases
