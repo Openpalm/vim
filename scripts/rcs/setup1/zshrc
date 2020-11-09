@@ -14,7 +14,7 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 plugins=(git fzf zsh-completion)
 autoload -U compinit && compinit 
 
-source $ZSH/aliases.sh
+source $HOME/.vim/scripts/rcs/setup1/zsh_aliases.sh
 source ~/powerlevel10k/powerlevel10k.zsh-theme
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
