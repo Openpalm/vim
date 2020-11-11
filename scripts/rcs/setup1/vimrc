@@ -425,3 +425,4 @@ hi phpClassNamespaceSeparator guifg=#808080 guibg=NONE gui=NONE
 
 syn match phpParentOnly "[()]" contained containedin=phpParent
 hi phpParentOnly guifg=#f08080 guibg=NONE gui=NONE
+set rtp+=/usr/local/opt/fzf
