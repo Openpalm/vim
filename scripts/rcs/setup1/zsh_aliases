@@ -1,6 +1,7 @@
 # alias for editing rcs and console files 
 alias ea='vim $HOME/.zshfiles/aliases'
 alias ez='vim ~/.zshrc'
+alias eb='vim ~/.bashrc'
 alias ev='vim ~/.vimrc'
 alias evs='vim ~/Library/Application\ Support/Code/User/settings.json'
 alias etm='vim ~/.tmux.conf'
@@ -29,6 +30,8 @@ alias gotomamp="cd /Applications/MAMP"
 alias lsmamp="ls /Applications/MAMP"
 alias lsmampbin="ls /Applications/MAMP/bin"
 
+alias gotomamp="cd /Applications/MAMP"
+alias gotovim="cd ~/.vim"
 alias gotoinno="cd /Applications/MAMP/htdocs/wordpress/wp-content/themes/inno"
 
 
