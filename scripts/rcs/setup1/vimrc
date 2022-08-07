@@ -1,5 +1,6 @@
 filetype indent plugin on
 syntax enable
+syntax on
 
 set nocompatible
 set nu
@@ -23,7 +24,6 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'preservim/nerdcommenter' " \cc & \cu - works for visual mode
 Plugin 'tyru/open-browser.vim'
 Plugin '907th/vim-auto-save'
-Plugin 'ctrlpvim/ctrlp.vim'
 
 "#####################
 " looks
@@ -45,17 +45,10 @@ Plugin '2072/vim-syntax-for-PHP.git'
 
 Plugin 'dsawardekar/wordpress.vim'
 
-Plugin 'maksimr/vim-jsbeautify'
-Plugin 'mattn/emmet-vim'
-
 "#####################
 " linters, code analysis, etc.
 "#####################
 Plugin 'dense-analysis/ale'
-Plugin 'SirVer/ultisnips'
-Plugin 'rstacruz/vim-ultisnips-css'
-Plugin 'vim-syntastic/syntastic'
-Plugin 'neoclide/coc.nvim', {'branch': 'release'}
 "coc debug
 "cd ~/.vim/bundle/coc.nvim/ && git reset head --hard
 "open vim && :PluginUpdate
@@ -99,20 +92,6 @@ let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standar
 "#######################
 let g:lsp_log_verbose = 1
 let g:lsp_log_file = expand('~/vim-lsp.log')
-
-"#######################
-"emmet
-"#######################
-imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
-let g:user_emmet_mode='inv'    "enable all function in all mode.
-let g:user_emmet_expandabbr_key='<Tab>'
-
-let g:user_emmet_install_global = 0
-autocmd FileType html,css,php EmmetInstall
-
-augroup EmmetSettings
-  autocmd! FileType html imap <tab> <plug>(emmet-expand-abbr)
-augroup END
 
 "#######################
 "ale
@@ -285,38 +264,10 @@ else
   set signcolumn=yes
 endif
 
-" Use tab for trigger completion with characters ahead and navigate.
-" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
-" other plugin before putting this into your config.
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-
 function! s:check_back_space() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
-
-"candidate for removal
-"candidate for removal
-"candidate for removal
-"candidate for removal
-"candidate for removal
-"candidate for removal
-"candidate for removal
-"candidate for removal
-if has('nvim')
-  inoremap <silent><expr> <c-space> coc#refresh()
-else
-  inoremap <silent><expr> <c-@> coc#refresh()
-endif
-
-" Make <CR> auto-select the first completion item and notify coc.nvim to
-" format on enter, <cr> could be remapped by other vim plugin
-inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
-      \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 
 "autocomplete settings
@@ -426,3 +377,7 @@ hi phpClassNamespaceSeparator guifg=#808080 guibg=NONE gui=NONE
 syn match phpParentOnly "[()]" contained containedin=phpParent
 hi phpParentOnly guifg=#f08080 guibg=NONE gui=NONE
 set rtp+=/usr/local/opt/fzf
+
+let g:NERDTreeWinSize = 20
+
+set lazyredraw

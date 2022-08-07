@@ -18,7 +18,4 @@ sh -e ./scripts/rcs/setup1/link
 vim +PluginInstall +qall
 vim +PluginUpdate +qall
 vim -c "call coc#util#install()"
-vim -c "CocInstall coc-css"
-npm install -g csslint
-npm install -g PrettyCSS
 brew install fzf
